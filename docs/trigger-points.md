@@ -18,6 +18,10 @@ Brain2V must be given a row here.**
 | `/obs-list` | user wants an inventory, or the index looks drifted | organiser decision | offer |
 | `/obs-personality` | identity / credential change | organiser decision | **ask first — writes secrets** |
 | `/obs-pentest` | a pentest engagement with a real `scope.md` | organiser decision | **ask first — active tooling** |
+| `/obs-code-personality` | about to build/test → load build DNA; or a stated design/methodology/report/template preference | organiser decision | auto-load before building; auto-record on explicit preference, else offer |
+| `/obs-life` | user shares a life/career update | organiser decision | auto on explicit share; else offer |
+| `/obs-optimiser` | "which tool for X?", or a tool outcome to record | organiser decision | offer recommendation; auto-record reported outcome |
+| `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares tool knowledge/config/outcome | organiser decision | auto on explicit share; else offer (feeds `/obs-optimiser`) |
 
 ## Hook mechanics (honest)
 

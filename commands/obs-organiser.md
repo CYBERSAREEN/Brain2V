@@ -79,6 +79,10 @@ This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
 | `/obs-list` | user wants an inventory, or index looks drifted | ask/offer |
 | `/obs-personality` | identity/credential change | ask first — secrets |
 | `/obs-pentest` | a pentest engagement with a real scope.md | ask first — active tooling |
+| `/obs-code-personality` | about to do web-dev/pentest work → load build DNA; or user states a design/methodology/report/template preference → record it | auto to load before building; auto-record on explicit preference, else offer |
+| `/obs-life` | user shares a life/career update (role change, priorities, constraints) | auto on explicit share; else offer |
+| `/obs-optimiser` | "which tool/framework for X?" (automation, learning, pentest tooling), or after a tool was used → record outcome | offer recommendation; auto-record outcome when the user reports one |
+| `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares knowledge/config/outcome about that automation tool | auto on explicit share; else offer. These feed `/obs-optimiser`. |
 
 New `/obs-*` skills added later MUST be given a row here and in
 `Brain2V/docs/trigger-points.md` when created — that's how the organiser stays aware of

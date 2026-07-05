@@ -31,12 +31,15 @@ mistakes reuse for magic.
   the first and that overlap was captured. Treat such numbers as a target the reuse
   mechanisms move you toward, never a guarantee.
 
-## Related external work (not part of this repo)
+## Environment-level efficiency (separate from this repo)
 
-Separately from Brain2V, the maintainer's Claude Code setup is being tuned for lower
-token usage using the `zerx-lab/zap` project (https://github.com/zerx-lab/zap). That work
-is **intentionally not linked into Brain2V** and ships in neither this repo nor its
-install — it optimizes the Claude Code environment itself. It's noted here only to record
-that environment-level efficiency work informed Brain2V's design. The specifics of that
-integration are documented with the zap work, not here, and should not be described
-secondhand.
+Brain2V reduces token cost at the *application* layer (index lookups, reuse, targeted
+loads). Separately, at the *environment* layer, the maintainer runs **zap** — a
+third-party tool (https://github.com/zerx-lab/zap) that reduces a Claude Code session's
+token usage substantially — installed into their Claude Code. zap is **not authored here,
+not part of this repo, and not installed by Brain2V's `install.sh`**; it's an independent
+tool that anyone can add to their own Claude Code. It's mentioned only to record that
+Brain2V is designed to sit *on top of* an already token-optimized environment: the two
+compose (zap trims the session, Brain2V avoids re-deriving work), but neither depends on
+the other. For zap's own install/config, see its repository — Brain2V does not
+re-document it.

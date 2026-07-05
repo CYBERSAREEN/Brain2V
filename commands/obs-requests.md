@@ -62,19 +62,27 @@ recurring kind of request evolved. Frontmatter: `date`, `kind: request`,
 Maintain `Requests/Requests-index.md` as the map (one line per entry: date, short label,
 gist of the refinement).
 
-## 5. Apply next time — the confirmation gate (this is the point)
+## 5. Apply next time — state it, then just ask permission (this is the point)
 Whenever a new prompt arrives that plausibly matches a filed request (same topic,
 overlapping phrasing/keywords — check via `.obs-index/by-label/request/` and the index,
 not a full-vault search), do this **before** producing the full response:
-1. Note the match and propose the refined interpretation from the filed note.
-2. Ask the user directly: **"is this what you meant?"** — a real confirmation, not a
-   rhetorical aside.
-3. Only proceed with that interpretation once confirmed; if the user says no or
-   redirects, treat the new prompt on its own terms and consider filing *that* as a new
-   refined entry later.
+1. **State the inferred requirement plainly and confidently** — don't hedge with a long
+   re-explanation of your reasoning. The whole point of accumulating history in
+   `Requests/`, `CodePersonality/`, `Life/`, etc. is that Claude should increasingly know
+   what the user means without re-deriving it from scratch each time. A one-line
+   statement of the interpretation is the goal, not a paragraph justifying it.
+2. Ask a **fast permission check**, not a full re-confirmation: "→ proceeding on that
+   basis — go ahead?" rather than a drawn-out "is this what you meant, here's my
+   reasoning, please confirm every part." The confidence should visibly grow as more
+   matching history accumulates — a topic with one prior refined entry still deserves a
+   fuller check; a topic with many consistent prior entries deserves a short one.
+3. Only proceed once permission is given; if the user says no or redirects, treat the
+   new prompt on its own terms and consider filing *that* as a new refined entry (the
+   correction itself is signal — a mismatch here is exactly the kind of thing worth
+   researching at the next `/obs-requests` run).
 Matching is **best-effort** (keyword/topic overlap via the index), not guaranteed
-semantic matching — that imprecision is exactly why the confirmation question is
-mandatory, not optional, whenever a match is used.
+semantic matching — that imprecision is exactly why a permission check happens every
+time a match is used, even a fast one. "Fast" is not "skipped."
 
 ## 6. Index it
 Upsert per the shared protocol — hash index + `by-label/request/` symlink.

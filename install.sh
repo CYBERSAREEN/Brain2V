@@ -35,10 +35,25 @@ for f in "$REPO_DIR"/knowledge/*.md; do
   fi
 done
 
+echo "Installing hook scripts -> $CLAUDE_DIR/hooks/"
+mkdir -p "$CLAUDE_DIR/hooks"
+for f in "$REPO_DIR"/hooks/scripts/*; do
+  name="$(basename "$f")"
+  if [ -e "$CLAUDE_DIR/hooks/$name" ]; then
+    echo "  [skip] $name already exists"
+  else
+    cp "$f" "$CLAUDE_DIR/hooks/"
+    chmod +x "$CLAUDE_DIR/hooks/$name"
+    echo "  [ok]   $name"
+  fi
+done
+
 echo
-echo "Hooks: NOT auto-merged (won't touch your settings.json)."
-echo "Review hooks/settings.hooks.json — CHANGE the vault path in the PostToolUse 'if:'"
-echo "conditions to your own vault — then merge its \"hooks\" block into:"
+echo "Hooks CONFIG: NOT auto-merged (won't touch your settings.json)."
+echo "Review hooks/settings.hooks.json — CHANGE:"
+echo "  1. the vault path in the PostToolUse 'if:' conditions to your own vault"
+echo "  2. the tokenguard-read-check.sh path if \$CLAUDE_CONFIG_DIR isn't ~/.claude"
+echo "Then merge its \"hooks\" block into:"
 echo "  $CLAUDE_DIR/settings.json"
 echo
 echo "Done. Open Claude Code and run /obs-organiser to start."

@@ -23,7 +23,16 @@ Brain2V must be given a row here.**
 | `/obs-optimiser` | "which tool for X?", or a tool outcome to record | organiser decision | offer recommendation; auto-record reported outcome |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares tool knowledge/config/outcome | organiser decision | auto on explicit share; else offer (feeds `/obs-optimiser`) |
 | `/obs-distil` | large PDF/brief/transcript to "remember", or a bloated raw-dump note | organiser decision | offer — stores only the required essence + source pointer (storage-side token saving) |
-| `/obs-requests` | session ending (research ambiguous prompts from this session); or a new prompt matches a filed refined request | `SessionEnd` hook for the review; organiser must confirm with "is this what you meant?" before applying a matched refinement |
+| `/obs-requests` | session ending (research ambiguous prompts from this session); or a new prompt matches a filed refined request | `SessionEnd` hook for the review; organiser states the inferred requirement and asks a fast permission check (never skipped) before applying a matched refinement |
+| `/obs-tokenguard` | on demand, or worth a look near session end | organiser decision — offered, not auto-run. Paired with a real-time `PreToolUse` hook on `Read` (see below) |
+
+## Real-time efficiency hook
+
+A `PreToolUse` hook on `Read` (`hooks/tokenguard-read-check.sh` — a real script, not just
+a static echo) checks the target file's size and, above ~50KB, nudges toward `Grep`,
+targeted `Read` (`offset`/`limit`), or `/obs-distil`. It never blocks the read — a
+genuinely necessary full read always proceeds; the hook only makes the cheaper option
+visible at the moment it matters. See `knowledge/obs-tokenguard-protocol.md`.
 
 ## Hook mechanics (honest)
 

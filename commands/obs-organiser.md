@@ -84,7 +84,13 @@ This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
 | `/obs-optimiser` | "which tool/framework for X?" (automation, learning, pentest tooling), or after a tool was used → record outcome | offer recommendation; auto-record outcome when the user reports one |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares knowledge/config/outcome about that automation tool | auto on explicit share; else offer. These feed `/obs-optimiser`. |
 | `/obs-distil` | user dumps a large PDF/brief/transcript and wants it "remembered", or a bloated raw-dump note is spotted | offer to distil (store only the required essence + a source pointer) — this is the storage-side token saving |
-| `/obs-requests` | session ending (research this session's ambiguous prompts); or a new prompt matches a filed refined request | `SessionEnd` hook for the review; organiser checks `by-label/request/` before processing a matching new prompt and must ask "is this what you meant?" before applying it |
+| `/obs-requests` | session ending (research this session's ambiguous prompts); or a new prompt matches a filed refined request | `SessionEnd` hook for the review; organiser checks `by-label/request/`, states the inferred requirement, and asks a fast permission check before applying it |
+| `/obs-tokenguard` | on demand, or worth a look near session end | `PreToolUse` hook on `Read` nudges in real time (never blocks); the skill itself is offered, not auto-run |
+
+Real-time efficiency: a `PreToolUse` hook on `Read` (`~/.claude/hooks/tokenguard-read-check.sh`)
+nudges toward Grep/targeted-Read/`/obs-distil` on files over ~50KB. It's a reminder, not a
+block — root sessions on this machine should default to the cheaper option, but a
+genuinely necessary full read always proceeds.
 
 The distillation protocol (`~/.claude/knowledge/obs-distillation-protocol.md`) is
 system-wide: the organiser and every capture skill store the minimum required, never a

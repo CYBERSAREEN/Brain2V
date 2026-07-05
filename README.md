@@ -36,7 +36,8 @@ Brain2V/
 | `/obs-mistakes` | Logs an error + its fix so it's never repeated. |
 | `/obs-connect` | Bridges two topics via the link graph. |
 | `/obs-distil` | "Remember this, minimally" — stores only the required essence of a PDF/brief/dump (with a source pointer), so future reads cost far fewer tokens. |
-| `/obs-requests` | Researches this session's ambiguous prompts at session end, files a refined "what you meant" version, and confirms with you before applying it to a similar future prompt. |
+| `/obs-requests` | Researches this session's ambiguous prompts at session end, files a refined "what you meant" version, and — as history builds — states the inferred requirement and asks a fast permission check before applying it to a similar future prompt. |
+| `/obs-tokenguard` | Reviews this session's tool calls for approximate token cost and suggests cheaper alternatives. Paired with a real-time `PreToolUse` hook that nudges (never blocks) on large file reads. |
 | `/obs-closeday` | End-of-day log: progress, ideas, carryover. |
 | `/obs-retain-context` | Snapshots the session before context compacts. |
 | `/obs-personality` | Stores an identity/credential profile **locally** (never in this repo). |

@@ -22,6 +22,18 @@
         ]
       }
     ],
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/root/.claude/hooks/tokenguard-read-check.sh",
+            "statusMessage": "Checking file size for token efficiency..."
+          }
+        ]
+      }
+    ],
     "PostToolUseFailure": [
       {
         "hooks": [

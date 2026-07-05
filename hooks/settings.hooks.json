@@ -1,0 +1,72 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"New session started. Before doing anything else, run /obs-guide to brief on what is complete, incomplete, and what to start next, based on the Obsidian vault.\"}}'",
+            "statusMessage": "Loading /obs-guide briefing..."
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PreCompact\",\"additionalContext\":\"Context is about to be compacted. Before continuing, run /obs-retain-context now to snapshot in-flight work, decisions, files touched, and open threads into the vault, so detail is not lost to compaction.\"}}'",
+            "statusMessage": "Snapshotting context to /obs-retain-context..."
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUseFailure\",\"additionalContext\":\"A tool call just failed. Once this is understood and fixed, log the error and its fix via /obs-mistakes so it is never repeated. If there is a broader reusable lesson beyond just this bug, also log it via /obs-learn.\"}}'",
+            "statusMessage": "Flagging for /obs-mistakes..."
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"A file was just written under the Obsidian vault. Per the linking protocol, check whether the new note links, in its Related section, to a note from a different obs-star kind or section than this one. If so, consider running /obs-connect on that pair now instead of leaving it as just a wikilink.\"}}'",
+            "if": "Write(/home/kali/Documents/ObsidianVaults/AgencyMemory/*)",
+            "statusMessage": "Checking for /obs-connect candidates..."
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"A file was just edited under the Obsidian vault. Per the linking protocol, check whether the note links, in its Related section, to a note from a different obs-star kind or section than this one. If so, consider running /obs-connect on that pair now instead of leaving it as just a wikilink.\"}}'",
+            "if": "Edit(/home/kali/Documents/ObsidianVaults/AgencyMemory/*)",
+            "statusMessage": "Checking for /obs-connect candidates..."
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionEnd\",\"additionalContext\":\"A session is ending. Run /obs-closeday now to log progress, new ideas, and unfinished carryover from this session before it closes.\"}}'",
+            "statusMessage": "Wrapping up with /obs-closeday..."
+          }
+        ]
+      }
+    ]
+  }
+}

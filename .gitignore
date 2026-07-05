@@ -1,0 +1,37 @@
+# Brain2V ships the skill SYSTEM only. Nothing below should ever enter this repo.
+
+# --- Secrets & credentials (never commit) ---
+.env
+.env.*
+*.secret
+*.secrets
+.secrets/
+.personality.txt
+*personalities.env
+*.pem
+*.key
+id_rsa
+id_ed25519
+*.vercel-auth-*.json
+
+# --- Vault content (personal notes stay local) ---
+# If a vault is ever placed inside this repo for testing, keep its real content out.
+Personalities/
+Journal/
+Learnings/
+Mistakes/
+CyberAI/
+Pentest/
+Connections/
+Context/
+Traces/
+Lists/
+Life/
+CodePersonality/
+.obs-index/
+.obsidian/
+
+# --- OS / editor noise ---
+.DS_Store
+*.swp
+node_modules/

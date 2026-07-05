@@ -36,6 +36,7 @@ Brain2V/
 | `/obs-mistakes` | Logs an error + its fix so it's never repeated. |
 | `/obs-connect` | Bridges two topics via the link graph. |
 | `/obs-distil` | "Remember this, minimally" — stores only the required essence of a PDF/brief/dump (with a source pointer), so future reads cost far fewer tokens. |
+| `/obs-requests` | Researches this session's ambiguous prompts at session end, files a refined "what you meant" version, and confirms with you before applying it to a similar future prompt. |
 | `/obs-closeday` | End-of-day log: progress, ideas, carryover. |
 | `/obs-retain-context` | Snapshots the session before context compacts. |
 | `/obs-personality` | Stores an identity/credential profile **locally** (never in this repo). |

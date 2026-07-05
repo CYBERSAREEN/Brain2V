@@ -62,8 +62,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionEnd\",\"additionalContext\":\"A session is ending. Run /obs-closeday now to log progress, new ideas, and unfinished carryover from this session before it closes.\"}}'",
-            "statusMessage": "Wrapping up with /obs-closeday..."
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionEnd\",\"additionalContext\":\"A session is ending. Run /obs-closeday now to log progress, new ideas, and unfinished carryover, and run /obs-requests to research this sessions ambiguous prompts and file refined versions before it closes.\"}}'",
+            "statusMessage": "Wrapping up with /obs-closeday + /obs-requests..."
           }
         ]
       }

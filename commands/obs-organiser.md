@@ -84,6 +84,7 @@ This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
 | `/obs-optimiser` | "which tool/framework for X?" (automation, learning, pentest tooling), or after a tool was used → record outcome | offer recommendation; auto-record outcome when the user reports one |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares knowledge/config/outcome about that automation tool | auto on explicit share; else offer. These feed `/obs-optimiser`. |
 | `/obs-distil` | user dumps a large PDF/brief/transcript and wants it "remembered", or a bloated raw-dump note is spotted | offer to distil (store only the required essence + a source pointer) — this is the storage-side token saving |
+| `/obs-requests` | session ending (research this session's ambiguous prompts); or a new prompt matches a filed refined request | `SessionEnd` hook for the review; organiser checks `by-label/request/` before processing a matching new prompt and must ask "is this what you meant?" before applying it |
 
 The distillation protocol (`~/.claude/knowledge/obs-distillation-protocol.md`) is
 system-wide: the organiser and every capture skill store the minimum required, never a

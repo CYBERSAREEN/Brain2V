@@ -22,6 +22,7 @@ Brain2V must be given a row here.**
 | `/obs-life` | user shares a life/career update | organiser decision | auto on explicit share; else offer |
 | `/obs-optimiser` | "which tool for X?", or a tool outcome to record | organiser decision | offer recommendation; auto-record reported outcome |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares tool knowledge/config/outcome | organiser decision | auto on explicit share; else offer (feeds `/obs-optimiser`) |
+| `/obs-distil` | large PDF/brief/transcript to "remember", or a bloated raw-dump note | organiser decision | offer — stores only the required essence + source pointer (storage-side token saving) |
 
 ## Hook mechanics (honest)
 

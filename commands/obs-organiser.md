@@ -83,6 +83,11 @@ This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
 | `/obs-life` | user shares a life/career update (role change, priorities, constraints) | auto on explicit share; else offer |
 | `/obs-optimiser` | "which tool/framework for X?" (automation, learning, pentest tooling), or after a tool was used → record outcome | offer recommendation; auto-record outcome when the user reports one |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares knowledge/config/outcome about that automation tool | auto on explicit share; else offer. These feed `/obs-optimiser`. |
+| `/obs-distil` | user dumps a large PDF/brief/transcript and wants it "remembered", or a bloated raw-dump note is spotted | offer to distil (store only the required essence + a source pointer) — this is the storage-side token saving |
+
+The distillation protocol (`~/.claude/knowledge/obs-distillation-protocol.md`) is
+system-wide: the organiser and every capture skill store the minimum required, never a
+raw dump. Prefer distilled notes on read.
 
 New `/obs-*` skills added later MUST be given a row here and in
 `Brain2V/docs/trigger-points.md` when created — that's how the organiser stays aware of

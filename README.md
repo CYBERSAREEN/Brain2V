@@ -35,6 +35,7 @@ Brain2V/
 | `/obs-learn-cyber` | Learns cybersecurity + AI specifically — PDFs, courses, MCP concepts, "what I did." |
 | `/obs-mistakes` | Logs an error + its fix so it's never repeated. |
 | `/obs-connect` | Bridges two topics via the link graph. |
+| `/obs-distil` | "Remember this, minimally" — stores only the required essence of a PDF/brief/dump (with a source pointer), so future reads cost far fewer tokens. |
 | `/obs-closeday` | End-of-day log: progress, ideas, carryover. |
 | `/obs-retain-context` | Snapshots the session before context compacts. |
 | `/obs-personality` | Stores an identity/credential profile **locally** (never in this repo). |
@@ -55,7 +56,11 @@ Brain2V/
    fails, offer a `/obs-connect` when a new cross-section note appears, brief you at
    session start, snapshot before compaction, and wrap up at session end. See
    `docs/trigger-points.md`.
-4. **Reuse makes it cheaper.** Because context resolves through the index and prior
+4. **Distil, don't dump.** Large inputs (a whole PDF, an over-explained brief) are stored
+   as only their *required* essence plus a pointer to the untouched source — a fraction of
+   the tokens on every future read, with nothing actually lost. See
+   `knowledge/obs-distillation-protocol.md` and `/obs-distil`.
+5. **Reuse makes it cheaper.** Because context resolves through the index and prior
    solutions/templates/learnings are persisted, the *second* similar project reuses the
    first instead of re-deriving it. That reuse — not magic — is what drives work down in
    time and tokens over time. See `docs/efficiency.md` for an honest account of what is

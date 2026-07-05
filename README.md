@@ -68,6 +68,12 @@ Brain2V/
    time and tokens over time. See `docs/efficiency.md` for an honest account of what is
    and isn't automatic.
 
+## Full Manual
+
+[`docs/manual/Brain2V-Manual.pdf`](./docs/manual/Brain2V-Manual.pdf) — every skill above,
+documented in detail with usage syntax and a worked example, plus an "Honest limit" note
+wherever a skill has a genuine approximation or constraint. Source: `docs/manual/MANUAL.html`.
+
 ## Install
 
 ```bash

@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brain2V — Full Skill Manual</title>
+<style>
+  @page {
+    size: A4;
+    margin: 2.2cm 1.8cm 2.4cm 1.8cm;
+    @bottom-center {
+      content: "Brain2V — Skill Manual  ·  page " counter(page) " of " counter(pages);
+      font-size: 9px;
+      color: #666;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: "DejaVu Sans", "Liberation Sans", Arial, sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #1a1a1a;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  h1, h2, h3, h4 { font-family: "DejaVu Sans", Arial, sans-serif; color: #10233b; }
+  .titlepage {
+    page-break-after: always;
+    text-align: center;
+    padding-top: 6cm;
+  }
+  .titlepage h1 { font-size: 34px; margin-bottom: 6px; }
+  .titlepage .sub { font-size: 15px; color: #555; margin-bottom: 40px; }
+  .titlepage .meta { font-size: 11px; color: #777; margin-top: 60px; }
+  .toc { page-break-after: always; }
+  .toc h2 { font-size: 20px; border-bottom: 2px solid #10233b; padding-bottom: 6px; }
+  .toc ol { columns: 1; }
+  .toc li { margin: 4px 0; font-size: 11.5px; }
+  .toc a { color: #10233b; text-decoration: none; }
+  .toc .grp { font-weight: bold; margin-top: 14px; display: block; color: #7a3b00; }
+  .intro { page-break-after: always; }
+  .intro h2 { font-size: 20px; border-bottom: 2px solid #10233b; padding-bottom: 6px; }
+  section.skill {
+    page-break-before: always;
+    page-break-inside: auto;
+  }
+  section.skill h2 {
+    font-size: 19px;
+    border-bottom: 2px solid #7a3b00;
+    padding-bottom: 5px;
+    margin-bottom: 2px;
+  }
+  section.skill .oneliner {
+    font-size: 11.5px;
+    font-style: italic;
+    color: #444;
+    margin-bottom: 14px;
+  }
+  section.skill h3 {
+    font-size: 13.5px;
+    color: #7a3b00;
+    margin-top: 16px;
+    margin-bottom: 4px;
+  }
+  section.skill p, section.skill li { font-size: 11px; }
+  code, .mono {
+    font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+    font-size: 10px;
+    background: #f2f2f2;
+    padding: 1px 4px;
+    border-radius: 2px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  pre {
+    background: #f7f6f2;
+    border: 1px solid #ddd;
+    border-left: 3px solid #7a3b00;
+    padding: 8px 10px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    font-family: "DejaVu Sans Mono", "Liberation Mono", monospace;
+    font-size: 9.5px;
+    line-height: 1.4;
+    page-break-inside: avoid;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px 0; font-size: 10px; }
+  table, th, td { border: 1px solid #ccc; }
+  th, td { padding: 4px 6px; text-align: left; vertical-align: top; }
+  th { background: #eef1f5; }
+  .badge {
+    display: inline-block;
+    font-size: 9px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    background: #10233b;
+    color: #fff;
+    margin-left: 6px;
+  }
+  .honest {
+    background: #fff8ec;
+    border: 1px solid #e0c48a;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin: 8px 0;
+    font-size: 10.5px;
+  }
+  .honest b { color: #8a5a00; }
+  .related { font-size: 10.5px; color: #333; }
+  hr.rule { border: none; border-top: 1px solid #ccc; margin: 10px 0; }
+</style>
+</head>
+<body>
+
+<div class="titlepage">
+  <h1>Brain2V</h1>
+  <div class="sub">Full Skill Manual — every /obs-* command, explained and demonstrated</div>
+  <div class="meta">
+    Repository: github.com/CYBERSAREEN/Brain2V<br>
+    Generated: 2026-07-06<br>
+    23 skills documented — no page limit, nothing abridged
+  </div>
+</div>
+
+<div class="toc">
+<h2>Table of Contents</h2>
+<ol>
+  <span class="grp">Orchestration</span>
+  <li><a href="#obs-organiser">1. /obs-organiser</a> — the brain that routes everything else</li>
+
+  <span class="grp">Session Lifecycle</span>
+  <li><a href="#obs-guide">2. /obs-guide</a> — what's complete / incomplete / next</li>
+  <li><a href="#obs-closeday">3. /obs-closeday</a> — end-of-day log</li>
+  <li><a href="#obs-retain-context">4. /obs-retain-context</a> — snapshot before compaction</li>
+  <li><a href="#obs-context-code">5. /obs-context-code</a> — full life/work context load</li>
+  <li><a href="#obs-understanding">6. /obs-understanding</a> — learn how you work</li>
+
+  <span class="grp">Knowledge Capture</span>
+  <li><a href="#obs-learn">7. /obs-learn</a> — general learning capture</li>
+  <li><a href="#obs-mistakes">8. /obs-mistakes</a> — error + fix, never repeated</li>
+  <li><a href="#obs-learn-cyber">9. /obs-learn-cyber</a> — cybersecurity + AI learning companion</li>
+  <li><a href="#obs-distil">10. /obs-distil</a> — store only what's required</li>
+
+  <span class="grp">Identity &amp; Build DNA</span>
+  <li><a href="#obs-personality">11. /obs-personality</a> — who you are (credentials)</li>
+  <li><a href="#obs-code-personality">12. /obs-code-personality</a> — how you build</li>
+  <li><a href="#obs-life">13. /obs-life</a> — life/career journal, the "why"</li>
+
+  <span class="grp">Automation Decision-Making</span>
+  <li><a href="#obs-optimiser">14. /obs-optimiser</a> — which external tool to use</li>
+  <li><a href="#obs-n8n">15. /obs-n8n</a> — n8n knowledge capture</li>
+  <li><a href="#obs-crewai">16. /obs-crewai</a> — CrewAI knowledge capture</li>
+  <li><a href="#obs-hermes">17. /obs-hermes</a> — Hermes knowledge capture</li>
+
+  <span class="grp">Discovery &amp; Connections</span>
+  <li><a href="#obs-list">18. /obs-list</a> — full system inventory</li>
+  <li><a href="#obs-connect">19. /obs-connect</a> — bridge two topics</li>
+  <li><a href="#trace">20. /trace</a> — how an idea evolved over time</li>
+
+  <span class="grp">Security</span>
+  <li><a href="#obs-pentest">21. /obs-pentest</a> — full pentest engagement agent</li>
+
+  <span class="grp">Efficiency</span>
+  <li><a href="#obs-tokenguard">22. /obs-tokenguard</a> — per-command token cost</li>
+  <li><a href="#obs-requests">23. /obs-requests</a> — research your own prompts</li>
+</ol>
+</div>
+
+<div class="intro">
+<h2>What Brain2V Is</h2>
+<p>Brain2V is a second-brain skill system for Claude Code, built on top of an Obsidian
+vault. It is not an application or a background service — there is no process running
+between your turns. Everything here is a <b>protocol layer</b>: skill definitions
+(<code>commands/</code>), shared conventions (<code>knowledge/</code>), and hook nudges
+(<code>hooks/</code>) that Claude Code follows while you work.</p>
+
+<p>Three ideas run through every skill in this manual:</p>
+<ul>
+<li><b>Fast lookup, not scanning.</b> Every note is registered in a two-layer index — a
+hash map (<code>date|time|day|label → note</code>) for O(1) exact lookup, and a symlink
+tree (<code>by-date/</code>, <code>by-day/</code>, <code>by-label/</code>) so "everything
+from Friday" or "everything tagged pentest" is a plain filesystem listing, as fast as the
+OS finds a file, regardless of how large the vault grows.</li>
+<li><b>One graph, not silos.</b> Every note a skill writes cross-links to same-day and
+subject-related notes and carries a shared <code>#obs</code> tag, so the vault reads as
+one connected brain in Obsidian's own graph and backlinks view.</li>
+<li><b>Store what's required, not everything.</b> Large sources (a PDF, an
+over-explained brief) get distilled to their essence plus a pointer to the original —
+never dumped raw — so every future read costs a fraction of the tokens with nothing
+actually lost.</li>
+</ul>
+
+<p>This manual documents all 23 skills currently in the family: what each one does, why
+it exists, exactly how to invoke it, and a worked example grounded in its real behavior —
+not aspirational copy. Wherever a skill has a genuine limitation (something it cannot
+actually do, or an approximation it makes), that limitation is stated plainly in a boxed
+<b>Honest limit</b> note rather than glossed over. This is a deliberate house style across
+the whole project: the system is more useful when its guarantees are accurate.</p>
+</div>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-organiser">
+<h2>1. /obs-organiser <span class="badge">Orchestrator</span></h2>
+<div class="oneliner">The orchestrator ("brain") of the /obs-* system — routes every
+request to the right skill, initializes the fast index, and drives the whole family as
+one coherent system.</div>
+
+<h3>What it does</h3>
+<p><code>/obs-organiser</code> is the routing-and-decision layer that ties every other
+skill in this manual together. On first invocation in a session it initializes cheaply —
+it reads the most recent Journal entry, the most recent context snapshot, and a
+directory listing of <code>.obs-index/by-label/</code> (a filesystem <code>ls</code>, not
+a vault scan) — enough situational awareness to route intelligently without reading the
+whole vault. From there, every request that plausibly maps to an obs skill gets routed:
+a fetch ("utha vedant personality") resolves via a hash lookup or a label-directory
+listing instead of a search; an action (logging a mistake, starting a pentest,
+connecting two topics) gets matched against the trigger table and either invoked or
+flagged to the user as the applicable skill.</p>
+
+<p>The organiser also decides, for each candidate skill, whether to trigger it
+automatically or ask first. Low-risk, additive actions (logging a learning, updating the
+index, briefing at session start) trigger automatically. Anything that writes
+credentials (<code>/obs-personality</code>), runs active tooling against a target
+(<code>/obs-pentest</code>), or is genuinely ambiguous gets asked about first, one line,
+so the user can override.</p>
+
+<p>Finally, the organiser owns the "employee-style" loop the whole system is built
+around: request → route → execute until the goal is met → learnings/mistakes captured
+(via the auto-trigger hooks) → human feedback → corrections written back. At the end of
+a unit of work, its job is to check the loop actually closed — was a mistake logged with
+its fix, was a reusable lesson saved — and close it if not.</p>
+
+<h3>Standing duty: keeping Brain2V in sync</h3>
+<p>The organiser also carries a pre-authorized standing responsibility: whenever any
+<code>/obs-*</code> command file, shared protocol, or hook script changes, it syncs the
+change into the Brain2V repository, secret-scans the diff, commits, and pushes — without
+asking permission for the push itself each time, though it always reports afterward what
+was pushed and to which commit.</p>
+
+<div class="honest"><b>Honest limit:</b> the organiser is a protocol in force for the
+session, re-invoked at defined trigger points — not an always-on daemon "watching
+side by side." A hook or skill cannot run continuously between turns; nothing here polls
+in the background. Likewise, "faster on the second project" is not self-optimization —
+it is a direct consequence of resolving context through the index and reusing persisted
+work, and it only appears when that prior work genuinely exists to reuse.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Initializes for the session and waits to route the next request.</td></tr>
+<tr><td><code>&lt;a request or goal&gt;</code></td><td>Routes that request directly, e.g. a fetch or an action mapped to a specific skill.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-organiser utha vedant personality</pre>
+<p>The organiser recognizes this as a fetch for a persona. Instead of searching the
+vault, it computes (or looks up) the hash key for <code>label:personality,
+title:vedant</code>, or lists <code>.obs-index/by-label/personality/</code>, resolves the
+symlink to <code>Personalities/vedant.md</code>, and reads that single note directly.</p>
+
+<p class="related"><b>Related:</b> every other skill in this manual is a candidate for
+organiser routing — see each skill's own section for its specific trigger condition.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-guide">
+<h2>2. /obs-guide <span class="badge">Session Lifecycle</span></h2>
+<div class="oneliner">Reads back your recent journal/session/engagement data and briefs
+you on what's complete, what's incomplete, and what to start with next.</div>
+
+<h3>What it does</h3>
+<p><code>/obs-guide</code> is the "what should I do right now" briefing. It pulls from
+every place other obs skills leave state — the last 2-3 <code>Journal/</code> entries
+(with special weight on the "Unfinished / carries to tomorrow" section, the single
+strongest incomplete-work signal in the vault), the most recent
+<code>Context/session-log.md</code> snapshot, any <code>Pentest/&lt;target&gt;/
+pen-context.md</code> engagement missing a final report, and recent
+<code>Mistakes/</code>/<code>Learnings/</code> entries whose <code>do-not</code> warning
+is relevant to whatever comes next.</p>
+
+<p>It reconciles these into three honest buckets — complete (something later explicitly
+marked it done), incomplete (appears in a carryover list, nothing later closed it), and
+stale (present once, never mentioned again, not marked either way) — and ranks a single
+"Start here" recommendation rather than a flat list: an explicit carryover from the most
+recent Journal note outranks an open Context thread, which outranks an unfinished pentest
+engagement, which outranks anything else incomplete (oldest first).</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Covers everything found across the vault.</td></tr>
+<tr><td><code>&lt;project/focus&gt;</code></td><td>Narrows the briefing to that project or focus only, e.g. "excelonCS" or "pentest".</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-guide</pre>
+<p>Produces a report headed by a single "Start here" line with its source note linked,
+then Complete / Incomplete / Stale / Relevant warnings sections — each saying "none
+found" explicitly rather than being silently omitted if empty.</p>
+
+<div class="honest"><b>Honest limit:</b> this is a live status read, not a saved
+artifact — a cached copy of "what to do next" from days ago would actively mislead, so
+it is deliberately never persisted to the vault.</div>
+
+<p class="related"><b>Related:</b> fires automatically via the <code>SessionStart</code>
+hook. Reads state left by /obs-closeday, /obs-retain-context, /obs-pentest,
+/obs-mistakes, /obs-learn.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-closeday">
+<h2>3. /obs-closeday <span class="badge">Session Lifecycle</span></h2>
+<div class="oneliner">Reviews what you worked on today and logs a dated close-of-day
+note to the vault — progress, new ideas, unfinished carryover. Counterpart to
+/obs-context-code.</div>
+
+<h3>What it does</h3>
+<p>At the end of a working day, <code>/obs-closeday</code> gathers what changed —
+notes modified today (via filesystem mtime), a summary of the session's own activity
+(files touched, decisions made, commands run — visible only from this session's own
+context, not stored anywhere else), and anything logged today by other obs skills — and
+writes it to <code>Journal/&lt;YYYY-MM-DD&gt;.md</code> under three sections: Progress,
+New ideas that came up, and Unfinished / carries to tomorrow. If the day's file already
+exists (re-running the same day), it merges new findings into the existing sections
+rather than duplicating them.</p>
+
+<p>Per the linking protocol, this note is the day's hub: it links out to every other
+same-day note from any obs skill, and — since Obsidian backlinks are automatic — every
+one of those notes linking back here (per their own Related sections) means the day
+becomes a natural two-way entry point into everything that happened on it.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Only invocation form — no parameters.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-closeday</pre>
+<p>Writes or merges into <code>Journal/2026-07-06.md</code>, linking every note created
+today by <code>/obs-learn</code>, <code>/obs-mistakes</code>, <code>/obs-pentest</code>,
+etc.</p>
+
+<p class="related"><b>Related:</b> fires automatically via the <code>SessionEnd</code>
+hook (alongside <code>/obs-requests</code>). Read first by <code>/obs-guide</code>.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-retain-context">
+<h2>4. /obs-retain-context <span class="badge">Session Lifecycle</span></h2>
+<div class="oneliner">Manually snapshots the full current session (in-flight work,
+decisions, open threads) into the vault with a timestamp — a save-point for when a
+session is running low on context room.</div>
+
+<h3>What it does</h3>
+<p>Builds a snapshot of the session as of right now — in-flight tasks, decisions made
+and why (especially anything non-obvious that isn't recoverable by re-reading code),
+files touched, and open threads — and appends (never overwrites) an entry to
+<code>Context/session-log.md</code> with an exact timestamp.</p>
+
+<div class="honest"><b>Honest limit, stated up front in the skill itself:</b> a slash
+command cannot fire itself automatically at a context-usage percentage — nothing invokes
+a skill without the user or a hook doing so. True automatic triggering requires a hook.
+This command is the manual save-point itself.</div>
+
+<p>In practice, this limit is addressed by a real <code>PreCompact</code> hook wired in
+settings.json, which nudges Claude to run this command right before context is
+compacted — the hook provides the trigger, this command provides the save.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Only invocation form.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-retain-context</pre>
+<p>Appends a dated entry like:</p>
+<pre>## 2026-07-06 01:05 — Context snapshot
+**In flight:** ...
+**Decisions:** ...
+**Files touched:** ...
+**Open threads:** ...
+**Related:** [[Journal/2026-07-06]]</pre>
+
+<p class="related"><b>Related:</b> triggered by the <code>PreCompact</code> hook. Indexed
+once as a whole (<code>kind: context-log</code>), not once per entry, since it is an
+append-only log.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-context-code">
+<h2>5. /obs-context-code <span class="badge">Session Lifecycle</span></h2>
+<div class="oneliner">Loads your full life and work state into Claude Code — active
+projects, preferences, priorities, and current focus — by reading your Obsidian vault.
+Use at the start of any session where you want the agent to already know everything
+relevant about you.</div>
+
+<h3>What it does</h3>
+<p>Scans across every registered vault (not just the default) for: recently modified
+notes (last 7 days), journal/daily entries from that window, notes tagged
+<code>#project</code>/<code>#active</code>/<code>#priority</code>/<code>#focus</code>
+or carrying <code>status: active</code>, and standing preferences that aren't
+time-boxed. It organizes these into four buckets — Active projects, Recent reflections,
+Priorities mentioned, and Standing preferences — and reports each explicitly, saying
+"none found" rather than omitting an empty bucket.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Covers everything.</td></tr>
+<tr><td><code>&lt;focus area&gt;</code></td><td>Narrows to that area, e.g. "work" or "personal".</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-context-code work</pre>
+
+<div class="honest"><b>Honest limit:</b> like /obs-guide, this is a live session load,
+not a new artifact — it deliberately does not save a copy to the vault, since it is
+simply a current read of what already lives there.</div>
+
+<p class="related"><b>Related:</b> counterpart to /obs-closeday (which closes the day
+this one opens).</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-understanding">
+<h2>6. /obs-understanding <span class="badge">Session Lifecycle</span></h2>
+<div class="oneliner">Builds Claude's understanding of the user's personal workflow,
+methodology, and philosophy — how they work and how they want Claude to work — by
+reading their Obsidian vault and existing memory.</div>
+
+<h3>What it does</h3>
+<p>This skill has a standing proactive trigger: it should be invoked via the Skill tool
+whenever "Obsidian" is mentioned in any form anywhere in the conversation — the vault,
+vault notes, or any obs-* command — not only when typed explicitly. The full search runs
+once per session on first mention; later mentions in the same session just apply what
+was already learned rather than re-running the search.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Only invocation form — but see the proactive trigger above.</td></tr>
+</table>
+
+<h3>Example</h3>
+<p>The user says "let's use Obsidian for this" mid-conversation, unrelated to any
+explicit slash command. This skill fires proactively, runs its search once, and folds
+the result into how the rest of the session treats the user's working style.</p>
+
+<p class="related"><b>Related:</b> feeds context that <code>/obs-code-personality</code>
+and <code>/obs-life</code> later formalize into standing, structured preferences.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-learn">
+<h2>7. /obs-learn <span class="badge">Knowledge Capture</span></h2>
+<div class="oneliner">Captures something you just learned into the vault with the
+current date/time — general knowledge capture. For errors/mistakes specifically, use
+/obs-mistakes instead.</div>
+
+<h3>What it does</h3>
+<p>Appends a dated, titled entry to <code>Learnings/learnings.md</code> — one growing
+file, so the index maps topic → file rather than topic → per-entry path. Before
+appending, it checks for a near-duplicate entry on the same topic from the last ~30
+days; if found, it appends a dated follow-up under the existing entry instead of
+creating a near-duplicate new one. Every entry includes a <code>related:
+[[Journal/&lt;today&gt;]]</code> line so the day's Journal note backlinks here
+automatically.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;what you learned&gt;</code></td><td>Required — the skill asks and stops if empty rather than guessing.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-learn Vercel builds are case-sensitive on Linux even though macOS/Windows aren't</pre>
+<p>Produces an entry titled with a short derived heading, the learning in full, inferred
+tags, and the Journal backlink — filed into <code>Learnings/learnings.md</code>.</p>
+
+<p class="related"><b>Related:</b> distinct from /obs-mistakes (errors specifically) and
+/obs-learn-cyber (cybersecurity + AI domain specifically).</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-mistakes">
+<h2>8. /obs-mistakes <span class="badge">Knowledge Capture</span></h2>
+<div class="oneliner">Logs a mistake — build failure, wrong approach, or an AI
+hallucination/false-positive/false-negative — into the vault so it's never repeated. The
+Obsidian-side counterpart to ~/.claude/knowledge/learnings.md.</div>
+
+<h3>What it does</h3>
+<p>Classifies the mistake (build-failure, ai-hallucination, false-positive,
+false-negative, process-mistake, other) and appends a structured entry to
+<code>Mistakes/mistakes.md</code>, using the same entry format as
+<code>~/.claude/knowledge/learnings.md</code> so both stores read consistently: what
+happened, root cause, fix/correction, and — critically — a <code>do-not</code> line
+naming the specific wrong approach to never retry. If this exact mistake was logged
+before, that repetition is itself flagged explicitly (the earlier do-not clearly didn't
+stick). Code/build/deploy/security-related mistakes are also cross-written to
+<code>~/.claude/knowledge/learnings.md</code>, so the orchestrator pipeline's mandatory
+before-work read picks them up too.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;what went wrong&gt;</code></td><td>Required.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-mistakes a migration script hashed a placeholder time shared across
+three entries, causing a silent key collision that dropped two of them</pre>
+<p>Real example from this project's own history: classified as
+<code>process-mistake</code>, root cause and fix recorded, cross-written to
+<code>learnings.md</code>, tagged <code>hash-collision, obs-index, obs-list, backfill,
+indexing</code>.</p>
+
+<h3>Auto-trigger</h3>
+<p>A <code>PostToolUseFailure</code> hook nudges toward this skill whenever a tool call
+fails, once the failure is understood and fixed — logging happens after resolution, not
+at the moment of failure itself.</p>
+
+<p class="related"><b>Related:</b> feeds <code>~/.claude/knowledge/learnings.md</code>
+for code-related entries; distinct from the general-purpose /obs-learn.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-learn-cyber">
+<h2>9. /obs-learn-cyber <span class="badge">Knowledge Capture</span></h2>
+<div class="oneliner">Learns cybersecurity + AI knowledge alongside you — PDFs,
+course/book notes, MCP concepts, or "what I just did" — acknowledges understanding back
+to you, and files it so /trace can show how your understanding evolved.</div>
+
+<h3>What it does</h3>
+<p>This is a domain-specific learning companion, distinct from the general-purpose
+<code>/obs-learn</code>. It classifies incoming material into one of four recognized
+categories — a PDF or file path (read directly, the Read tool handles PDFs natively), a
+course/book excerpt, an MCP-protocol concept (deliberately tied back to concrete MCP
+connections already live in the environment, such as the Burp Suite or Obsidian MCP
+servers), or a "what I did" activity log (extracted from the user's own description, not
+a document).</p>
+
+<p>Critically, it <b>acknowledges its understanding back to the user in the chat reply
+before filing anything</b> — restating the core concept and specifically how it's
+framing the cybersecurity↔AI connection, flagging explicitly if any part is uncertain
+rather than filing a confident-sounding note built on a guess. This acknowledgment step
+is treated as the skill's actual job, with saving as the secondary persistence step.</p>
+
+<p>Each learning event is filed as its <b>own dated note</b> — deliberately not appended
+to one growing log — specifically so that <code>/trace &lt;topic&gt;</code> can later
+show real evolution across sessions once a topic has two or more notes. A
+<code>CyberAI-index.md</code> hub tracks MCP concepts, sources, an activity log, and a
+curated list of intersection highlights.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;pasted text&gt;</code></td><td>Course/book excerpt or general text.</td></tr>
+<tr><td><code>&lt;path to PDF/file&gt;</code></td><td>Read in full and distilled into concepts.</td></tr>
+<tr><td><code>&lt;a topic&gt;</code></td><td>e.g. "MCP server security" — logged as an MCP-concept entry.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-learn-cyber /home/kali/Downloads/ai-red-teaming-2026.pdf</pre>
+<p>Reads the PDF, restates in chat what was understood and how it connects
+cybersecurity and AI, then files
+<code>CyberAI/2026-07-06-ai-red-teaming.md</code> with source-type <code>pdf</code>,
+the extracted essence, and a Related link back to the index and today's Journal.</p>
+
+<p class="related"><b>Related:</b> designed explicitly to work with /trace. Distinct
+from /obs-learn (general) and /obs-mistakes (errors).</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-distil">
+<h2>10. /obs-distil <span class="badge">Knowledge Capture</span></h2>
+<div class="oneliner">"Remember this, minimally." Takes an over-explained brief, a
+whole PDF, or a long dump and stores ONLY the required essence in Obsidian (with a
+pointer to the source), so every future read costs far fewer tokens. Brain2V's native
+context-reduction feature.</div>
+
+<h3>What it does</h3>
+<p>This is Brain2V's storage-side token-efficiency feature. The source is read in full
+(a PDF, a pasted brief, an existing bloated note), but only the required essence is
+stored — decisions, specs, exact values, constraints, gotchas, acceptance criteria — and
+the note keeps a pointer to the untouched original rather than the raw material itself.
+The success test the skill applies: "would future work still have everything it needs
+from this shorter note, without re-reading the original?" If unsure whether a detail is
+load-bearing, it keeps it (or relies on the source pointer), rather than risk losing
+something genuinely needed.</p>
+
+<p>Every capture skill in the family (<code>/obs-learn</code>,
+<code>/obs-learn-cyber</code>, <code>/obs-mistakes</code>, the automation-tool skills,
+<code>/obs-code-personality</code>) is expected to distil by default — none should paste
+a raw dump into the vault.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;path to a PDF/file&gt;</code></td><td>Reads and distils it.</td></tr>
+<tr><td><code>&lt;pasted text&gt;</code></td><td>Distils the pasted material directly.</td></tr>
+<tr><td><code>distil &lt;existing note&gt;</code></td><td>Shrinks an already-bloated note in place.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-distil /home/kali/Documents/pentest-automation-whitepaper.pdf</pre>
+<p>Reports back something like: "distilled a 40-page PDF to a ~20-line note; original
+preserved at &lt;path&gt;" — with the note saved to
+<code>Distilled/2026-07-06-pentest-automation.md</code>.</p>
+
+<div class="honest"><b>Honest limit:</b> distillation is lossy on purpose — it keeps
+what's judged required. If the user explicitly wants the whole thing verbatim, the skill
+honours that, but says plainly it costs more tokens on every future read.</div>
+
+<p class="related"><b>Related:</b> the storage-side counterpart to the fast-lookup index
+(retrieval-side) and /obs-tokenguard (live command-cost side).</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-personality">
+<h2>11. /obs-personality <span class="badge">Identity &amp; Build DNA</span></h2>
+<div class="oneliner">Stores a full identity/credential profile (git identity, tokens,
+API keys, associated projects) in the vault, keyed by persona name — the Obsidian-side
+counterpart to /personality.</div>
+
+<h3>What it does</h3>
+<p>Each persona is its own note under <code>Personalities/&lt;persona-name&gt;.md</code>
+— identity fields (git name/email), tokens/credentials (GitHub, Vercel, Supabase,
+Render, other API keys), and associated projects. Calling it with just a persona name
+reads and reports that profile (masking secret-looking values in the chat reply while
+the file itself keeps the full value); calling it with <code>field=value</code> pairs
+upserts those fields without dropping ones not mentioned in that call.</p>
+
+<div class="honest"><b>Standing risk, deliberately accepted:</b> this skill stores raw
+secret values in plaintext in the vault by explicit user choice, diverging from this
+environment's own separate reference-only credential pattern
+(<code>.secrets/&lt;name&gt;.env</code> plus a mode-600 file, used elsewhere). The user
+was shown that alternative directly and chose raw storage in Obsidian anyway. This
+means every credential here is only as safe as the vault itself.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;persona-name&gt;</code></td><td>Reads and reports that profile (masked in chat).</td></tr>
+<tr><td><code>&lt;persona-name&gt; field=value ...</code></td><td>Creates or updates fields on that profile.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-personality vedant github-token=ghp_xxxxxxxxxxxxxxxxxxxx</pre>
+<p>Upserts the GitHub token field on <code>Personalities/vedant.md</code>, confirming
+back which field names were set — never echoing the full value in chat unless
+explicitly asked.</p>
+
+<p class="related"><b>Related:</b> the "who you are" counterpart to
+/obs-code-personality's "how you build."</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-code-personality">
+<h2>12. /obs-code-personality <span class="badge">Identity &amp; Build DNA</span></h2>
+<div class="oneliner">Captures and applies your BUILD DNA — design style/colour
+palettes/web-dev structure, pentest ideology + preferred tools + HackerOne/Bugcrowd
+report style, and reusable code templates — so Claude builds and tests things your way
+without you re-explaining each time.</div>
+
+<h3>What it does</h3>
+<p>Build DNA is split into five domain notes under <code>CodePersonality/</code>:
+<code>design.md</code> (colour palettes with exact hex values, typography, layout
+preferences, things to always avoid), <code>webdev.md</code> (preferred stack, project
+structure, naming conventions, patterns embraced or rejected), <code>pentest.md</code>
+(testing ideology, the tools actually relied on and in what order), <code>reports.md</code>
+(HackerOne/Bugcrowd report structure, tone, severity framing, templates), and
+<code>code-templates.md</code> (reusable scaffolds to reuse verbatim).</p>
+
+<p>It has two modes: recording a preference (routed to the right domain note, appended
+with dated provenance, never silently overwriting a contradicting prior preference — both
+are kept and the user is asked which is current), and applying build DNA before doing
+web-dev or pentest work (reading the relevant domain notes first and actually building to
+them — asking rather than guessing for anything still marked "not yet specified").</p>
+
+<div class="honest"><b>Honest limit:</b> this profile only grows from what the user
+actually provides. It never invents a palette, a stack preference, or a methodology —
+fields not yet specified are marked as such, and the skill asks instead of guessing.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;a preference&gt;</code></td><td>Records it to the matching domain note.</td></tr>
+<tr><td><code>apply design|webdev|pentest|reports</code></td><td>Loads that domain before building.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-code-personality background should be #F4F1EA, accent #B5652E, serif display type</pre>
+<p>Recorded to <code>CodePersonality/design.md</code> with dated provenance; a later
+<code>apply design</code> loads this before any new frontend work begins.</p>
+
+<p class="related"><b>Related:</b> the "how you build" counterpart to
+/obs-personality's "who you are." Feeds /obs-optimiser indirectly via recorded pentest
+tool preferences.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-life">
+<h2>13. /obs-life <span class="badge">Identity &amp; Build DNA</span></h2>
+<div class="oneliner">Life &amp; career journal — captures updates about YOU (role
+changes, priorities, constraints) and specifically WHY your working style shifts, so
+Claude understands the reason behind changes, not just the change.</div>
+
+<h3>What it does</h3>
+<p>Distinct from <code>/obs-closeday</code> (work progress): this captures life context
+that reshapes how the user works — a role change, a new job, a shift in priorities, a
+constraint. It records the update in the user's own words without editorializing, then
+adds an explicit "why this might change how I work" hypothesis (framed as something to
+confirm with the user, never asserted as fact) — this is what later lets Claude
+understand why a build-DNA or project-approach change happened, instead of treating a
+style shift as unexplained.</p>
+
+<p>Each entry is its own dated note under <code>Life/&lt;date&gt;-&lt;slug&gt;.md</code>
+— deliberately, again, so <code>/trace &lt;life theme&gt;</code> can show how a situation
+evolved over time.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;a life/career update&gt;</code></td><td>Required.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-life joining EY as Sr Security Engineer next month</pre>
+<p>Files a dated note with an "Impact on how I work" section: a hypothesis that
+enterprise-scope, report-heavy engagements and stricter authorization boundaries may
+shift pentest working style — flagged for the user to confirm, not stated as settled.</p>
+
+<p class="related"><b>Related:</b> feeds /obs-code-personality when a life change
+plausibly affects build/pentest preferences.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-optimiser">
+<h2>14. /obs-optimiser <span class="badge">Automation Decision-Making</span></h2>
+<div class="oneliner">The decision agent for EXTERNAL tooling. Recommends the best
+tool/framework for a job from what's actually been recorded, logs the choice and its
+outcome, and improves its recommendations over time.</div>
+
+<h3>What it does</h3>
+<p>Deliberately distinct from <code>/obs-organiser</code> — that routes obs
+<i>skills</i>; this decides which <i>external</i> tool or framework to use (pentest
+automation, learning tools, automation frameworks). It has two modes: recommending
+(reading the relevant category log and any <code>/obs-n8n</code>, <code>/obs-crewai</code>,
+<code>/obs-hermes</code> notes bearing on the category, then naming a tool with the
+concrete evidence behind it — or saying plainly "not enough recorded to recommend
+confidently" rather than manufacturing a winner) and recording an outcome (after a tool
+was actually used, logging what happened so future recommendations improve).</p>
+
+<div class="honest"><b>Honest limit, stated in the skill itself:</b> it recommends only
+from evidence. If the recorded notes don't support naming a best tool, it says so and
+proposes gathering data first — it does not invent a "best tool" the notes don't
+support. This is the guardrail that keeps it a decision agent, not a hallucination
+engine.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>recommend &lt;task category&gt;</code></td><td>e.g. "recommend pentest automation".</td></tr>
+<tr><td><code>record &lt;tool&gt; &lt;outcome&gt;</code></td><td>Logs a real outcome.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-optimiser recommend pentest automation</pre>
+<p>Reads <code>Optimiser/pentest-automation.md</code> plus related n8n/CrewAI/Hermes
+notes; if two options are close, names the deciding factor rather than picking silently.</p>
+
+<p class="related"><b>Related:</b> fed by /obs-n8n, /obs-crewai, /obs-hermes.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-n8n">
+<h2>15. /obs-n8n <span class="badge">Automation Decision-Making</span></h2>
+<div class="oneliner">Captures your n8n knowledge — working workflows, node configs,
+credentials-handling patterns, gotchas, and what you automated — as dated notes that
+feed /obs-optimiser's automation recommendations.</div>
+
+<h3>What it does</h3>
+<p>Records a reusable workflow, a node/credential pattern, a gotcha, or an outcome as
+its own dated note under <code>Automation/n8n/</code>. Never stores real credentials or
+webhook secrets — it records the pattern ("uses an HTTP Request node with a bearer token
+from an n8n credential") and where the secret actually lives, scrubbing any pasted
+workflow JSON to placeholders and saying so.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;a workflow/config/learning&gt;</code></td><td>Records it.</td></tr>
+<tr><td><code>list</code></td><td>Shows what's already captured.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-n8n webhook -> HTTP Request (bearer from n8n credential) -> Slack notify;
+took 3 tries to get the retry/backoff right on the HTTP node</pre>
+
+<p class="related"><b>Related:</b> feeds /obs-optimiser's automation-framework
+recommendations, alongside /obs-crewai and /obs-hermes.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-crewai">
+<h2>16. /obs-crewai <span class="badge">Automation Decision-Making</span></h2>
+<div class="oneliner">Captures your CrewAI knowledge — agent/crew/task designs, tool
+wiring, prompt patterns, what worked and what didn't — as dated notes that feed
+/obs-optimiser's automation recommendations.</div>
+
+<h3>What it does</h3>
+<p>Same shape as <code>/obs-n8n</code>, scoped to CrewAI: crew/agent/task structures
+worth reusing, how tools were wired to agents, prompting patterns, and outcomes. Never
+stores real API keys — records which env var/provider was used, scrubbing pasted
+secrets to placeholders.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;a crew/agent/task design or learning&gt;</code></td><td>Records it.</td></tr>
+<tr><td><code>list</code></td><td>Shows what's already captured.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-crewai researcher + writer crew with a shared search tool cut token
+usage ~30% vs. a single monolithic agent on the same task</pre>
+
+<p class="related"><b>Related:</b> feeds /obs-optimiser, alongside /obs-n8n and
+/obs-hermes.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-hermes">
+<h2>17. /obs-hermes <span class="badge">Automation Decision-Making</span></h2>
+<div class="oneliner">Captures your Hermes knowledge — configs, workflows, and outcomes
+— as dated notes that feed /obs-optimiser. On first substantive use it confirms WHICH
+Hermes you mean so notes stay accurate.</div>
+
+<h3>What it does</h3>
+<p>Same shape as /obs-n8n and /obs-crewai, with one deliberate extra step: "Hermes" is
+an ambiguous name (it could mean the Nous Research Hermes LLM family, a
+messaging/automation framework, or something specific to the user's own stack). On the
+first substantive note — or if the index hub doesn't yet record which one — the skill
+asks the user directly which Hermes is meant and records the answer at the top of the
+index, rather than guessing. A wrong assumption here would poison every downstream
+recommendation, so this disambiguation is treated as mandatory, not optional.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;a config/workflow/learning&gt;</code></td><td>Records it (disambiguates first, if needed).</td></tr>
+<tr><td><code>list</code></td><td>Shows what's already captured.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-hermes [first use] -> Claude asks which Hermes, user answers,
+then: config X worked well for Y</pre>
+
+<p class="related"><b>Related:</b> feeds /obs-optimiser, alongside /obs-n8n and
+/obs-crewai.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-list">
+<h2>18. /obs-list <span class="badge">Discovery &amp; Connections</span></h2>
+<div class="oneliner">Detailed inventory of everything in the vault's /obs-* system —
+built from the fast filesystem index, not a full vault scan — and wired into
+/obs-connect, /obs-learn (+ /obs-learn-cyber, /obs-mistakes), and /trace.</div>
+
+<h3>What it does</h3>
+<p>Enumerates every label directory under <code>.obs-index/by-label/</code> (a
+filesystem listing, not a search) and organizes the results into sections matching the
+established folders — Journal, Learnings, Mistakes, CyberAI, Personalities, Pentest,
+Connections, Context log — each entry shown with date, time, a wikilink, and a
+content-derived gist. It then does three things no other skill does: surfaces
+cross-section pairs worth running <code>/obs-connect</code> on (without duplicating that
+analysis itself), flags any label/topic with two or more entries as "traceable," and
+collects those into a closing "Ready to /trace" list with the exact commands to run.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Full inventory.</td></tr>
+<tr><td><code>&lt;label/kind&gt;</code></td><td>Filters to that label only, e.g. "pentest" or "cyberlearn".</td></tr>
+</table>
+
+<h3>Example</h3>
+<p>A real run of this skill against this project's own vault (2026-07-05) reported:
+Personalities populated (three bootstrap-imported personas), every other section "none
+found" (most of the system was built but not yet exercised), and "none found" for both
+cross-connections and traceable topics — an honest snapshot rather than a padded report.</p>
+
+<div class="honest"><b>Honest limit:</b> the fast index is an accelerator; when it
+doesn't yet cover something (a note pre-dating the index, or written by something other
+than an obs-* command), the skill falls back to a full search rather than silently
+missing it.</div>
+
+<p class="related"><b>Related:</b> reads the index built by every other skill; feeds
+/obs-connect and /trace candidates.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-connect">
+<h2>19. /obs-connect <span class="badge">Discovery &amp; Connections</span></h2>
+<div class="oneliner">Bridges two topics using your vault's link graph and shared tags
+to surface connections you haven't noticed yet.</div>
+
+<h3>What it does</h3>
+<p>Given two topics, it independently searches for notes under each, builds a link
+graph (outbound wikilinks and backlinks for every candidate note), and looks for three
+kinds of connection: a direct link between a topic-A note and a topic-B note, a bridge
+note that links to both but belongs to neither, and shared tags across the two sets. It
+reports direct links, bridge notes, shared tags, and a short "pattern observed" — or
+says plainly that no connection was found, rather than forcing one that isn't there.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;topic A&gt; | &lt;topic B&gt;</code></td><td>The two topics to bridge (also accepts "and"/"vs" as separators).</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-connect vedant persona | excelonCS pentest engagement</pre>
+<p>Auto-saves the result to <code>Connections/&lt;topic A&gt;--&lt;topic B&gt;.md</code>
+(overwriting on rerun), with the note itself wikilinking every A-note and B-note used in
+the analysis — the note is the bridge, not just a description of one.</p>
+
+<p class="related"><b>Related:</b> candidates for this skill are surfaced by
+/obs-list; often triggered by the PostToolUse hook when a new vault note links across
+sections.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="trace">
+<h2>20. /trace <span class="badge">Discovery &amp; Connections</span></h2>
+<div class="oneliner">Trace how an idea/topic has evolved over time across the Obsidian
+vault — first appearance, evolution, and current connections.</div>
+
+<h3>What it does</h3>
+<p>The original vault-history skill, predating the rest of the family's linking/index
+protocol conventions. Searches broadly for every mention of a topic (vault search plus a
+direct grep, since each catches things the other misses), approximates backlinks (since
+there is no dedicated backlinks API) by grepping for each candidate note's title, and
+recurses one level to catch related-by-theme notes sharing tags. It then establishes
+chronology from frontmatter dates or, failing that, filesystem timestamps (marked
+approximate), and reports first appearance, evolution (skipping notes that just repeat
+an earlier mention with nothing new), current connections, and — only when the source
+notes are genuinely cluttered or repetitive — an organized synthesis that consolidates
+without inventing content.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;topic&gt;</code></td><td>Required — the skill asks and stops if empty.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/trace MCP server security</pre>
+<p>If <code>CyberAI/</code> holds two or more notes about MCP security (filed by
+<code>/obs-learn-cyber</code>), this produces a genuine timeline of how understanding
+developed, not just a single-note summary.</p>
+
+<p>Auto-saves the timeline to <code>Traces/&lt;topic&gt;.md</code> — overwriting on
+rerun, since a new run supersedes the old one rather than piling up duplicates.</p>
+
+<p class="related"><b>Related:</b> this is the payoff skill for every capture skill that
+deliberately files one note per event instead of one growing log — /obs-learn-cyber,
+/obs-life, /obs-requests all exist in that shape specifically so /trace has real
+material to work with.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-pentest">
+<h2>21. /obs-pentest <span class="badge">Security</span></h2>
+<div class="oneliner">Full recon→enum→exploit→report bug-bounty pentest agent
+(self-contained duplicate of /pentest), with continuous Obsidian vault logging of POCs
+and workflow so progress and learnings persist across sessions.</div>
+
+<h3>What it does</h3>
+<p>A complete, standalone pentest pipeline — scope enforcement first (reads
+<code>scope.md</code>, checks every target against it before any tool runs; a blanket
+"everything is legal" statement from the user is noted but never substitutes for an
+actual scope file), then recon, enumeration, a full OWASP Top 10 + WSTG-based
+vulnerability-testing pass, real-exploit-only exploit development (with a reverse-shell
+reference used strictly after RCE is confirmed on an in-scope target), and a
+HackerOne/Bugcrowd-standard report structure. What makes the "obs" version distinct
+from the plain <code>/pentest</code> command it duplicates is continuous vault logging:
+after every phase (not just at the end), a timestamped entry is appended to
+<code>Pentest/&lt;target&gt;/pen-context.md</code>, making the engagement resumable
+across sessions without re-reading every raw tool output again. The finished report also
+mirrors into the vault, and lessons cross-write to
+<code>~/.claude/knowledge/pentest-learning.md</code>, which is read at the start of
+every future engagement.</p>
+
+<h3>The zero-hallucination protocol</h3>
+<p>Every finding must trace to a verbatim line from a tool's output — no evidence, no
+finding. Generic ("may be vulnerable") claims without tool confirmation go under
+Potential Findings, explicitly labeled UNCONFIRMED. CVSS scores require a citable
+CWE/CVE, otherwise "CVSS: TBD." Under-reporting is treated as acceptable; a fabricated
+finding is not — a missed vulnerability is survivable, a fake one submitted to a bounty
+platform is not.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;path to scope.md&gt;</code></td><td>Required — the skill stops and asks if no scope.md is found.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-pentest /home/kali/Desktop/airbnb/scope.md</pre>
+<p>Creates both a local job directory and a vault note
+(<code>Pentest/airbnb/pen-context.md</code>), runs the full pipeline with continuous
+vault updates, and produces a critical-first report saved to both locations.</p>
+
+<p class="related"><b>Related:</b> the organiser routes this to "ask first" —
+active tooling against a target always requires confirmation, never auto-triggered.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-tokenguard">
+<h2>22. /obs-tokenguard <span class="badge">Efficiency</span></h2>
+<div class="oneliner">Reviews this session's tool calls for token cost, flags the
+expensive ones, and suggests a cheaper approach for next time. Root-scoped. Pairs with a
+real-time PreToolUse nudge on large Reads.</div>
+
+<h3>What it does</h3>
+<p>Two real mechanisms work together. First, a genuine <code>PreToolUse</code> hook on
+the <code>Read</code> tool (a real shell script that <code>stat</code>s the target
+file's size, not a static message) fires before any read over roughly 50KB, naming the
+file and its size and suggesting a cheaper approach — a targeted <code>Grep</code> if
+searching for something specific, <code>Read</code> with <code>offset</code>/
+<code>limit</code> if only a section is needed, or running <code>/obs-distil</code>
+afterward if it's a large reference document being captured. It never blocks the
+read — a genuinely necessary full read always proceeds; this is a reminder delivered at
+the moment it matters, not a gate. This hook was verified firing live against a real
+288KB file before being wired into the configuration.</p>
+
+<p>Second, the skill itself reviews the session on demand (or near session end): the
+largest/most expensive calls made, what a cheaper approach would have looked like, and
+whether a repeated pattern is worth adopting as a standing default — offered to
+<code>/obs-code-personality</code> rather than recorded automatically, since that skill
+only grows from explicit input.</p>
+
+<div class="honest"><b>Honest limit:</b> there is no exact per-call token meter exposed
+to a skill or hook. Every cost figure here is an approximation (roughly, output
+characters ÷ 4), reported as "approximately" — never as an exact number.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Reviews the current session.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-tokenguard</pre>
+<p>Might report: "Read of a 300-line config file to find one setting — approximately
+2,000 tokens; a targeted Grep would have cost a few hundred" — and ask whether that
+pattern (reading whole config files) is common enough to record as a standing
+preference.</p>
+
+<p class="related"><b>Related:</b> the live command-cost counterpart to /obs-distil
+(storage-side) and the fast-lookup index (retrieval-side).</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-requests">
+<h2>23. /obs-requests <span class="badge">Efficiency</span></h2>
+<div class="oneliner">Fires just before a session ends — reviews this session's
+prompts, researches the ambiguous/typo-heavy/misrouted ones, and drafts a clean "what
+you meant" version of each. Next time a similar prompt comes in, Claude checks this
+first, proposes that refined interpretation, and confirms before proceeding.</div>
+
+<h3>What it does</h3>
+<p>At session end, this skill looks back over the session's own prompts (only what's
+still in context — anything already lost to compaction isn't recoverable here) and
+picks out the ones that needed real work to understand: typos, ambiguity, a clarifying
+question that had to be asked, a correction or redirect after acting, or a case where
+content was dropped into the wrong command entirely. For each, it researches what the
+user actually meant — using the clarifying questions asked, corrections given, and the
+final accepted outcome as evidence — and writes a refined version: the same request,
+restated clearly and unambiguously, structured the way it should have been phrased to
+get the right result on the first pass. The original is kept completely verbatim,
+typos included, since that raw phrasing is the match signature used later.</p>
+
+<p>The real payoff is what happens on a future similar prompt. Rather than a long
+re-confirmation, the skill states the inferred requirement plainly and confidently — the
+whole point of accumulating history is that Claude should increasingly know what the
+user means without re-deriving it from scratch — then asks a fast permission check
+("proceeding on that basis — go ahead?") rather than a drawn-out re-explanation. The
+confidence is meant to visibly grow as more matching history accumulates: a topic with
+one prior entry still deserves a fuller check; a topic with many consistent entries
+deserves a short one. Matching itself is best-effort (keyword/topic overlap via the
+index, not guaranteed semantic matching) — which is exactly why the permission check
+happens every time a match is used, even a fast one. Fast is never the same as
+skipped.</p>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Fires via the SessionEnd hook.</td></tr>
+<tr><td><code>review &lt;topic&gt;</code></td><td>Checks filed refined prompts for a topic on demand.</td></tr>
+</table>
+
+<h3>Example</h3>
+<p>A prompt this session got redirected into the wrong command's argument by accident.
+At session end, <code>/obs-requests</code> files the original (verbatim, typos
+included), the evidence of what was actually meant, and a clean refined version under
+<code>Requests/2026-07-06-&lt;slug&gt;.md</code>. The next time a similarly-shaped
+prompt arrives, the organiser states "this looks like &lt;refined interpretation&gt; —
+proceeding on that basis, go ahead?" instead of re-deriving the same misunderstanding.</p>
+
+<p class="related"><b>Related:</b> fires via the same <code>SessionEnd</code> hook as
+/obs-closeday. Feeds the organiser's routing confidence over time.</p>
+</section>
+
+</body>
+</html>

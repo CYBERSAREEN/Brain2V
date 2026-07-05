@@ -70,3 +70,11 @@ request
 
 Stating these plainly is a design principle here, not a disclaimer — the system is more
 useful when its guarantees are honest.
+
+## This repo stays in sync with the live skill system
+
+The maintainer's live `/obs-*` commands, protocols, and hooks under `~/.claude/` are the
+working copy; this repo is kept current with them automatically — `/obs-organiser` syncs,
+secret-scans, commits, and pushes any changed skill/protocol/hook file here as part of its
+standing duties (see `commands/obs-organiser.md` § "Keep Brain2V in sync"). If you're
+reading this from the repo, the commit history is the real changelog.

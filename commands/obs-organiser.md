@@ -121,7 +121,22 @@ Every turn, prefer the cheapest path that's correct:
 Report, when relevant, that you used the index instead of a scan — it makes the
 efficiency visible and keeps the discipline honest.
 
-## 7. This is a live orchestration read, not a saved artifact
+## 7. Keep Brain2V in sync (standing duty, pre-authorized — do not ask each time)
+Whenever any `/obs-*` command file, a shared protocol under `~/.claude/knowledge/`, or a
+hook script under `~/.claude/hooks/` is created or edited, sync the changed file(s) into
+`/home/kali/Desktop/Brain2V` (mirroring the same relative path: `commands/`,
+`knowledge/`, `hooks/scripts/`), regenerate `hooks/settings.hooks.json` from the live
+`~/.claude/settings.json`, then commit and push to `github.com/CYBERSAREEN/Brain2V`.
+Before every push: secret-scan the staged diff, and scan it for any reference to
+external tools this project deliberately doesn't credit (check `[[obs_commands_built]]`-
+style memory for which names those are, without spelling them out in this file — this
+file is itself part of the repo). This was explicitly pre-authorized by the user
+("jab bhi kuch bhi update karu brain2v me push karde") — don't ask permission for the
+push itself each time; do still say plainly, after the fact, what was pushed and the
+commit it landed in. If a secret or an undesired reference is ever found in the diff,
+stop and flag it before pushing rather than pushing anyway.
+
+## 8. This is a live orchestration read, not a saved artifact
 Like `/obs-guide` and `/obs-context-code`, `/obs-organiser` does not save its own note —
 it's the live brain for *this* session. Its durable outputs are whatever the skills it
 routes to save. Don't persist an "organiser log"; that's what `/obs-retain-context` and

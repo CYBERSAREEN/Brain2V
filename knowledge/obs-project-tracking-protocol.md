@@ -59,6 +59,14 @@ installer (add missing, update stale descriptions, never delete) — this is del
 never shipped as vault content in a repo; each installer's own stubs reflect their own
 actual install.
 
+Each stub's frontmatter also carries `tested: true|false` and, when true, `last-run:
+<date>` — set to `true`/dated the first time that skill is actually invoked and observed
+working, left `false` otherwise. This is what lets a dashboard note query real status
+live (e.g. via the Dataview community plugin, if installed) instead of a hand-maintained
+table: `tested`/`last-run` are the only fields expected to change after a stub is
+created, and whatever updates a stub (a person, `/obs-adapt`, or any future automation)
+should flip them the moment a skill is genuinely exercised, not just written.
+
 ## Honest limit
 This is a documentation habit, not automation magic — nothing runs itself. The organiser
 offering to create one, and the user (or a future capture hook) actually appending stage

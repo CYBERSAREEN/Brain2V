@@ -56,10 +56,13 @@ including anything `/obs-skill-maker` generated for them, not a fixed list) and 
 graph-visibility pattern:
 - Missing stub → **create** it (one-liner description + argument-hint pulled from that
   command file's own frontmatter, source path, category tag, backlink to whichever
-  `Projects/<name>.md` this installer's own Brain2V-tracking note is, if one exists).
+  `Projects/<name>.md` this installer's own Brain2V-tracking note is, if one exists, plus
+  `tested: false` in frontmatter — no skill starts life marked tested).
 - Existing stub whose description no longer matches the command file's current
   frontmatter → **update** the stub's description only, leave everything else (any notes
-  the installer added to that stub themselves) untouched.
+  the installer added, and always its `tested`/`last-run` fields) untouched — this skill
+  never flips those itself; only actually observing a skill run and work is what earns
+  `tested: true`.
 - A skill removed from `~/.claude/commands/` → **do not delete** its stub. Leave it; a
   disappearing graph node is more confusing than a stale one, and the installer can
   delete it themselves if they want to.

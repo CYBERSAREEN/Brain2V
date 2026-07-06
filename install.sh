@@ -24,6 +24,26 @@ for f in "$REPO_DIR"/commands/*.md; do
   fi
 done
 
+# Core family completeness check — keep this list in sync with knowledge/obs-core-family.md
+CORE_SKILLS=(
+  obs-organiser obs-guide obs-closeday obs-retain-context obs-context-code
+  obs-understanding obs-learn obs-learn-cyber obs-mistakes obs-distil obs-personality
+  obs-code-personality obs-life obs-optimiser obs-n8n obs-crewai obs-hermes obs-list
+  obs-connect trace obs-tokenguard obs-requests obs-introduction obs-skill-maker
+)
+missing_from_repo=()
+missing_from_install=()
+for s in "${CORE_SKILLS[@]}"; do
+  [ -e "$REPO_DIR/commands/$s.md" ] || missing_from_repo+=("$s")
+  [ -e "$CLAUDE_DIR/commands/$s.md" ] || missing_from_install+=("$s")
+done
+if [ "${#missing_from_repo[@]}" -gt 0 ]; then
+  echo "  [WARN] repo is missing core skill(s): ${missing_from_repo[*]}"
+fi
+if [ "${#missing_from_install[@]}" -gt 0 ]; then
+  echo "  [WARN] install is missing core skill(s): ${missing_from_install[*]}"
+fi
+
 echo "Installing knowledge -> $CLAUDE_DIR/knowledge/"
 for f in "$REPO_DIR"/knowledge/*.md; do
   name="$(basename "$f")"
@@ -76,4 +96,6 @@ echo "  1. run 'gh auth login' (or set up git) with YOUR OWN GitHub account"
 echo "  2. edit $SYNC_CONFIG and set enabled:true, repo_path, and remote"
 echo "    to your own fork/repo — never CYBERSAREEN/Brain2V"
 echo
-echo "Done. Open Claude Code and run /obs-organiser to start."
+echo "Done. Open Claude Code and run /obs-introduction first if this is your first time"
+echo "setting up Brain2V — it asks what you do and hands off to /obs-skill-maker to build"
+echo "a skill around your actual work. Otherwise, run /obs-organiser to start."

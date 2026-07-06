@@ -71,10 +71,32 @@ request
 Stating these plainly is a design principle here, not a disclaimer — the system is more
 useful when its guarantees are honest.
 
-## This repo stays in sync with the live skill system
+## This repo stays in sync with the live skill system — per-installer, never hardcoded
 
-The maintainer's live `/obs-*` commands, protocols, and hooks under `~/.claude/` are the
-working copy; this repo is kept current with them automatically — `/obs-organiser` syncs,
-secret-scans, commits, and pushes any changed skill/protocol/hook file here as part of its
-standing duties (see `commands/obs-organiser.md` § "Keep Brain2V in sync"). If you're
-reading this from the repo, the commit history is the real changelog.
+Each installer's live `/obs-*` commands, protocols, and hooks under their own `~/.claude/`
+are their working copy. Syncing that working copy back to a GitHub remote is entirely
+config-driven via `~/.claude/brain2v.sync.json` (`enabled`/`repo_path`/`remote`) — nothing
+in the shipped skill files ever hardcodes a specific person's repo or path, because this
+repo is installed by people other than its original author. `install.sh` writes that
+config disabled by default; an installer opts in with their own GitHub login and their own
+repo. See `commands/obs-organiser.md` § "Keep Brain2V in sync" for the exact rule,
+including: routine edits to already-shipped skills sync automatically once opted in, but a
+brand-new skill file always stops to ask first — a new feature being aired publicly is a
+bigger decision than a routine sync.
+
+## Onboarding a new installer (profile-driven, not one-size-fits-all)
+
+Brain2V doesn't assume every installer does the same kind of work. `/obs-introduction`
+runs first on a fresh install, asks what the person does and what they want the setup
+for, and stores that as a Work profile. `/obs-skill-maker` then drafts a skill reflecting
+that actual work — saved to `pending-skills/`, never live until explicitly verified. Only
+after verification does it become a real, routed skill for that installer. This is why
+profession-specific skills (like pentesting) are never baked in as universal defaults —
+see `knowledge/obs-core-family.md` for exactly what *is* core vs. generated per installer.
+
+## Per-project tracking
+
+Any project under active development can get its own `/obs-<project-name>` skill (e.g.
+`/obs-brain2v`, documenting Brain2V's own build) — a durable, stage-by-stage log of that
+project's updates, errors, and design reasoning from build through production, always
+backlinked to the persona that owns it. See `knowledge/obs-project-tracking-protocol.md`.

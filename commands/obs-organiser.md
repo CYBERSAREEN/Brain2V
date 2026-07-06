@@ -78,8 +78,11 @@ This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
 | `/obs-connect` | a new note's Related links to a different-kind note | auto to *offer* (PostToolUse hook); ask before running |
 | `/obs-list` | user wants an inventory, or index looks drifted | ask/offer |
 | `/obs-personality` | identity/credential change | ask first — secrets |
-| `/obs-pentest` | a pentest engagement with a real scope.md | ask first — active tooling |
+| `/obs-pentest` | **only if present** — a pentest engagement with a real scope.md. Not shipped by default (see `/obs-skill-maker`); present on machines (like the author's) whose profile skill-set includes it | ask first — active tooling |
 | `/obs-code-personality` | about to do web-dev/pentest work → load build DNA; or user states a design/methodology/report/template preference → record it | auto to load before building; auto-record on explicit preference, else offer |
+| `/obs-introduction` | very first run on a fresh install with no persona/profile yet | auto-offer once on first session; never re-run over an existing profile without being asked |
+| `/obs-skill-maker` | right after `/obs-introduction` completes a new profile | auto-offer; the generated skill is a **draft in `pending-skills/`**, never wired into routing until explicitly verified by the repo owner |
+| `/obs-<project>` (e.g. `/obs-brain2v`) | sustained work on a project with no matching project skill yet | offer to create one, per `obs-project-tracking-protocol.md`; once it exists, trigger it same as any capture skill when that project's work happens |
 | `/obs-life` | user shares a life/career update (role change, priorities, constraints) | auto on explicit share; else offer |
 | `/obs-optimiser` | "which tool/framework for X?" (automation, learning, pentest tooling), or after a tool was used → record outcome | offer recommendation; auto-record outcome when the user reports one |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares knowledge/config/outcome about that automation tool | auto on explicit share; else offer. These feed `/obs-optimiser`. |
@@ -95,6 +98,12 @@ genuinely necessary full read always proceeds.
 The distillation protocol (`~/.claude/knowledge/obs-distillation-protocol.md`) is
 system-wide: the organiser and every capture skill store the minimum required, never a
 raw dump. Prefer distilled notes on read.
+
+**Core family, non-optional.** Every row above except `/obs-pentest` and
+`/obs-<project>`-style generated skills is core: `~/.claude/knowledge/obs-core-family.md`
+lists exactly which skills every installer must have, and `install.sh` checks the install
+against that list. Don't treat any core skill as something a "lite" install can skip —
+the organiser assumes the whole family is present and routes accordingly.
 
 New `/obs-*` skills added later MUST be given a row here and in
 `Brain2V/docs/trigger-points.md` when created — that's how the organiser stays aware of
@@ -136,19 +145,34 @@ installer owns: `~/.claude/brain2v.sync.json`:
   under `~/.claude/knowledge/`, or a hook script under `~/.claude/hooks/` is created or
   edited, sync the changed file(s) into `repo_path` (mirroring the same relative path:
   `commands/`, `knowledge/`, `hooks/scripts/`), regenerate `hooks/settings.hooks.json`
-  from the live `~/.claude/settings.json`, then commit and push to `remote` using
-  whatever `gh`/`git` identity is already active on this machine (never a hardcoded
-  username — that identity is the installer's own, set up via `/personality` or plain
-  `gh auth login`, and is expected to be overwritten freely after setup).
-- Before every push: secret-scan the staged diff, and scan it for any reference to
-  external tools this project deliberately doesn't credit (check `[[obs_commands_built]]`-
-  style memory for which names those are, without spelling them out in this file — this
-  file is itself part of the repo).
-- A config with `enabled: true` is standing, pre-authorized consent from whoever set that
-  flag on their own machine — don't ask permission for the push itself each time; do
-  still say plainly, after the fact, what was pushed and the commit it landed in. If a
-  secret or an undesired reference is ever found in the diff, stop and flag it before
-  pushing rather than pushing anyway.
+  from the live `~/.claude/settings.json`, then commit — using whatever `gh`/`git`
+  identity is already active on this machine (never a hardcoded username — that identity
+  is the installer's own, set up via `/personality` or plain `gh auth login`, and is
+  expected to be overwritten freely after setup).
+- **Before every push, verify the live identity first.** Run `gh auth status` (or check
+  `git config user.name`) and confirm the authenticated account actually matches the
+  owner in `remote` — a vault/persona memory saying "X is active" is not proof; a past
+  incident (2026-07-06) had a push fail 403 because the live session had silently drifted
+  to a different persona than the one memory implied. Mismatch → stop and ask, never push
+  on the assumption a remembered persona is still live.
+- **New skill vs. routine edit — different rules:**
+  - *Routine edit* (a bugfix, wording tweak, or protocol change to a skill **already**
+    present in `repo_path`): auto-push once the identity check above passes. A config with
+    `enabled: true` is standing, pre-authorized consent for exactly this case — don't ask
+    permission for the push itself each time; do still say plainly, after the fact, what
+    was pushed and the commit it landed in.
+  - *New feature* (a brand-new `/obs-*` command file that doesn't yet exist in
+    `repo_path/commands/`): **always ask before pushing**, regardless of `enabled`. A new
+    skill is something being aired live for every other installer to see and adopt — that
+    is a bigger decision than a routine sync and isn't covered by the standing
+    pre-authorization. Commit locally if you like, but hold the push until the user
+    explicitly says to go ahead.
+- Before every push (either case): secret-scan the staged diff, and scan it for any
+  reference to external tools this project deliberately doesn't credit (check
+  `[[obs_commands_built]]`-style memory for which names those are, without spelling them
+  out in this file — this file is itself part of the repo). If a secret or an undesired
+  reference is ever found in the diff, stop and flag it before pushing rather than
+  pushing anyway.
 - `install.sh` writes this config as a disabled template (`enabled: false`, empty
   `repo_path`/`remote`) on every fresh install — a new installer must deliberately opt in
   and point it at their *own* fork/repo before any auto-push can ever fire.

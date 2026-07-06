@@ -56,6 +56,17 @@ Body:
 - <any project / CyberAI / CodePersonality note this feeds>
 ```
 
+## 3b. Cybersecurity content → also hand off to /obs-learn-cyber
+If the material being distilled is cybersecurity- or AI-security-flavored, distilling it
+is not the same job as learning from it: this skill's output is the *essence* (facts,
+specs, values worth keeping) while `/obs-learn-cyber` is what actually captures *your
+understanding* of the material and lets `/trace` show how that understanding evolved
+over time. After saving the distilled note, auto-invoke `/obs-learn-cyber` on the same
+source (don't ask first — this is additive, not destructive) so both exist: the
+distilled essence, and the separate cyber-learning entry. Cross-link them both ways
+(`## Related` in each pointing at the other) so `/obs-connect` can surface the pairing
+later as a cross-connection worth noticing.
+
 ## 4. Report the saving honestly
 Tell the user, in one line, roughly how much was cut (e.g. "distilled a 40-page PDF to a
 ~20-line note; original preserved at <path>") and confirm the source is still pointed to,

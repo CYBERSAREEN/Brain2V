@@ -51,6 +51,10 @@ If `$ARGUMENTS` has no persona name at all, list existing personas
   it's new. Never drop fields that already exist and weren't mentioned in this call.
 
 ## 3. File format
+A persona note is not just a credential store — it's meant to reflect the person behind
+it, growing over time, which is exactly what `/obs-life` tracks (career/priority shifts,
+the "why" behind working-style changes). Keep them cross-linked so opening either one
+surfaces the other, per `~/.claude/knowledge/obs-linking-protocol.md`.
 ```markdown
 ---
 persona: <name>
@@ -76,6 +80,7 @@ tags: [personality, obs]
 ## Related
 - [[Personalities/<other-persona>]] — if this persona shares infrastructure (e.g. a
   Render account) with another, per `~/.claude/knowledge/obs-linking-protocol.md`
+- [[Life/Life-index]] — this persona's career/priority trajectory over time, if `/obs-life` entries exist for them
 - [[Journal/<date-created-or-last-edited>]]
 ```
 

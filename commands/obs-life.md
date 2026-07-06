@@ -31,7 +31,9 @@ preference, cross-link the relevant `[[CodePersonality/...]]` note.
 Path: `<vault>/Life/<YYYY-MM-DD>-<slug>.md` (create `Life/` if missing) — one note per
 entry, deliberately, so `/trace <life theme>` can show how a situation evolved.
 Frontmatter: `date`, `kind: life`, `tags: [life, obs]`, plus a `## Related` section
-linking `[[Life/Life-index]]`, `[[Journal/<today>]]`, and any affected
+linking `[[Life/Life-index]]`, `[[Journal/<today>]]`, the relevant `[[Personalities/<name>]]`
+note (this is the same person `/obs-personality` tracks — cross-link both ways, per
+`~/.claude/knowledge/obs-linking-protocol.md`), and any affected
 `[[CodePersonality/...]]` / project note. Body: the update, then an `## Impact on how I
 work` section (or "no expected impact" if genuinely none).
 

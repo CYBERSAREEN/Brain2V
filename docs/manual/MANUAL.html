@@ -116,7 +116,6 @@
   <h1>Brain2V</h1>
   <div class="sub">Full Skill Manual — every /obs-* command, explained and demonstrated</div>
   <div class="meta">
-    Repository: github.com/CYBERSAREEN/Brain2V<br>
     Generated: 2026-07-06 (updated same day — see §"Keeping this manual in sync")<br>
     28 skills documented — no page limit, nothing abridged
   </div>
@@ -237,7 +236,7 @@ it reads the most recent Journal entry, the most recent context snapshot, and a
 directory listing of <code>.obs-index/by-label/</code> (a filesystem <code>ls</code>, not
 a vault scan) — enough situational awareness to route intelligently without reading the
 whole vault. From there, every request that plausibly maps to an obs skill gets routed:
-a fetch ("utha vedant personality") resolves via a hash lookup or a label-directory
+a fetch ("utha &lt;persona&gt; personality") resolves via a hash lookup or a label-directory
 listing instead of a search; an action (logging a mistake, starting a pentest,
 connecting two topics) gets matched against the trigger table and either invoked or
 flagged to the user as the applicable skill.</p>
@@ -283,11 +282,11 @@ work, and it only appears when that prior work genuinely exists to reuse.</div>
 </table>
 
 <h3>Example</h3>
-<pre>/obs-organiser utha vedant personality</pre>
+<pre>/obs-organiser utha &lt;persona&gt; personality</pre>
 <p>The organiser recognizes this as a fetch for a persona. Instead of searching the
 vault, it computes (or looks up) the hash key for <code>label:personality,
-title:vedant</code>, or lists <code>.obs-index/by-label/personality/</code>, resolves the
-symlink to <code>Personalities/vedant.md</code>, and reads that single note directly.</p>
+title:&lt;persona&gt;</code>, or lists <code>.obs-index/by-label/personality/</code>, resolves the
+symlink to <code>Personalities/&lt;persona&gt;.md</code>, and reads that single note directly.</p>
 
 <p class="related"><b>Related:</b> every other skill in this manual is a candidate for
 organiser routing — see each skill's own section for its specific trigger condition.</p>
@@ -320,7 +319,7 @@ engagement, which outranks anything else incomplete (oldest first).</p>
 <table>
 <tr><th>Argument</th><th>Effect</th></tr>
 <tr><td><code>(none)</code></td><td>Covers everything found across the vault.</td></tr>
-<tr><td><code>&lt;project/focus&gt;</code></td><td>Narrows the briefing to that project or focus only, e.g. "excelonCS" or "pentest".</td></tr>
+<tr><td><code>&lt;project/focus&gt;</code></td><td>Narrows the briefing to that project or focus only, e.g. "&lt;your-project&gt;" or "pentest".</td></tr>
 </table>
 
 <h3>Example</h3>
@@ -678,8 +677,8 @@ means every credential here is only as safe as the vault itself.</div>
 </table>
 
 <h3>Example</h3>
-<pre>/obs-personality vedant github-token=ghp_xxxxxxxxxxxxxxxxxxxx</pre>
-<p>Upserts the GitHub token field on <code>Personalities/vedant.md</code>, confirming
+<pre>/obs-personality &lt;persona&gt; github-token=ghp_xxxxxxxxxxxxxxxxxxxx</pre>
+<p>Upserts the GitHub token field on <code>Personalities/&lt;persona&gt;.md</code>, confirming
 back which field names were set — never echoing the full value in chat unless
 explicitly asked.</p>
 
@@ -953,7 +952,7 @@ says plainly that no connection was found, rather than forcing one that isn't th
 </table>
 
 <h3>Example</h3>
-<pre>/obs-connect vedant persona | excelonCS pentest engagement</pre>
+<pre>/obs-connect &lt;persona&gt; | &lt;project&gt; pentest engagement</pre>
 <p>Auto-saves the result to <code>Connections/&lt;topic A&gt;--&lt;topic B&gt;.md</code>
 (overwriting on rerun), with the note itself wikilinking every A-note and B-note used in
 the analysis — the note is the bridge, not just a description of one.</p>
@@ -1253,6 +1252,14 @@ the required upstream step; this is also the reason
 ideology, stage by stage from build through production. The first concrete instance of
 the /obs-&lt;project&gt; pattern.</div>
 
+<div class="honest"><b>Not shipped by default.</b> This skill lives in the author's own
+local <code>~/.claude/commands/</code>, not in this repo's <code>commands/</code>
+folder — it's specific to tracking Brain2V's own build by the person who maintains it,
+not something every installer needs a copy of. Use
+<code>knowledge/obs-project-tracking-protocol.md</code> to create your own
+<code>/obs-&lt;your-project&gt;</code> instead — this section documents the pattern via
+a real (but non-shipped) example.</div>
+
 <h3>What it does</h3>
 <p>This is the reference implementation of a general pattern: any project under active
 development can get its own <code>/obs-&lt;project-name&gt;</code> skill, an append-only,
@@ -1287,7 +1294,7 @@ came out of — without duplicating that post-mortem's full text here.</p>
 
 <p class="related"><b>Related:</b> <code>knowledge/obs-project-tracking-protocol.md</code>
 defines the general pattern this skill implements; backlinked to
-<a href="#obs-personality">Personalities/vedant.md</a> as its owning persona.</p>
+<a href="#obs-personality">the author's own persona note</a> as its owning persona.</p>
 </section>
 
 <!-- ============================================================ -->

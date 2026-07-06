@@ -12,7 +12,7 @@ Any note created/updated by an `/obs-*` command ends with:
 ```markdown
 ## Related
 - [[Journal/2026-07-04]] — same-day journal entry
-- [[Personalities/vedant]] — persona tied to this project
+- [[Personalities/<persona-name>]] — persona tied to this project
 - [[Pentest/example.com/pen-context]] — related engagement
 ```
 Populate it from:

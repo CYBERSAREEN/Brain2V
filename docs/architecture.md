@@ -97,7 +97,9 @@ see `knowledge/obs-core-family.md` for exactly what *is* core vs. generated per 
 ## Per-project tracking
 
 Any project under active development can get its own `/obs-<project-name>` skill (e.g.
-`/obs-brain2v`, documenting Brain2V's own build) — a durable, stage-by-stage log of that
+the author's own `/obs-brain2v`, tracking Brain2V's build — not shipped in this repo,
+since it's specific to that one project/persona; see `obs-project-tracking-protocol.md`
+to create your own) — a durable, stage-by-stage log of that
 project's updates, errors, and design reasoning from build through production, always
 backlinked to the persona that owns it. See `knowledge/obs-project-tracking-protocol.md`.
 

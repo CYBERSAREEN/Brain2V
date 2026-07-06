@@ -1,6 +1,6 @@
 ---
 description: The orchestrator ("brain") of the /obs-* system. Initializes the fast index at session start, routes each request to the right obs skill via hash lookup instead of full-vault scans, drives the request→execute→learn→feedback loop, and gets cheaper on repeat work by reusing persisted templates/learnings. Runs the whole obs family as one coherent system.
-argument-hint: (none) — or a request/goal to route, e.g. "utha vedant personality" or "pentest the excelonCS scope"
+argument-hint: (none) — or a request/goal to route, e.g. "utha <persona> personality" or "pentest the <project> scope"
 ---
 
 ## What this is (and honestly, what it is not)
@@ -49,7 +49,7 @@ On first invocation in a session:
 
 ## 2. Route the request to the right skill (hash lookup, not search)
 Given the user's request (this turn's, or `$ARGUMENTS`):
-- If it's a **fetch** ("utha vedant personality", "get the excelonCS scope"): normalize to
+- If it's a **fetch** ("utha `<persona>` personality", "get the `<project>` scope"): normalize to
   `label` + title, compute the hash key or `ls .obs-index/by-label/<label>/`, resolve the
   symlink, read that one note directly. Never grep the whole vault for something the index
   already points at.

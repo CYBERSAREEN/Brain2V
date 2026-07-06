@@ -6,7 +6,7 @@ mistakes reuse for magic.
 
 ## The four real mechanisms
 
-1. **Index lookups replace vault scans.** Resolving "vedant personality" or "everything
+1. **Index lookups replace vault scans.** Resolving "`<persona>` personality" or "everything
    tagged pentest" is a hash lookup or a directory `ls`, not a content search across
    every note. As the vault grows, a scan gets more expensive; an index lookup does not.
    This is the single biggest per-request saving, and it compounds as the vault grows.

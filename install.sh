@@ -122,7 +122,7 @@ echo "GitHub auto-sync (organiser section 7) is OFF by default — $SYNC_CONFIG"
 echo "has enabled:false. It will never push anywhere until YOU:"
 echo "  1. run 'gh auth login' (or set up git) with YOUR OWN GitHub account"
 echo "  2. edit $SYNC_CONFIG and set enabled:true, repo_path, and remote"
-echo "    to your own fork/repo — never CYBERSAREEN/Brain2V"
+echo "    to your own fork/repo — never the original upstream repo you installed from"
 echo
 echo "Done. Open Claude Code — /obs-organiser calls /obs-spine first to work out which"
 echo "flow applies to you (first-time setup vs. updating an existing install) and takes"

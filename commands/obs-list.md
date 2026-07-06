@@ -40,9 +40,9 @@ line — don't fabricate a gist from the filename alone).
 
 ## 3. Wire into /obs-connect
 For every pair of entries that share a label/tag across *different* sections (e.g. a
-`Personalities/vedant.md` note and a `Pentest/excelonCS/` engagement both tagged to the
+`Personalities/<name>.md` note and a `Pentest/<project>/` engagement both tagged to the
 same project), list them under a **Cross-connections worth running `/obs-connect` on**
-subsection, with the exact suggested invocation, e.g. `/obs-connect vedant | excelonCS
+subsection, with the exact suggested invocation, e.g. `/obs-connect <persona> | <project>
 pentest`. Don't run the full `/obs-connect` analysis yourself here — this command's job
 is to surface *which* pairs are worth connecting, not to duplicate that command's work.
 

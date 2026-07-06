@@ -1,6 +1,6 @@
 ---
 description: Reads back your recent journal/session/engagement data and briefs you on what's complete, what's incomplete, and what to start with next.
-argument-hint: (none) — optionally a project/focus filter, e.g. "excelonCS" or "pentest"
+argument-hint: (none) — optionally a project/focus filter, e.g. "<your-project>" or "pentest"
 ---
 
 No parameters required. If `$ARGUMENTS` is non-empty, treat it as a filter to narrow the

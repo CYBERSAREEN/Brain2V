@@ -15,7 +15,7 @@ this is the durable, stage-by-stage story of one specific project.
   quick scripts never need this ceremony.
 - The user can also ask directly ("track this project", "make an /obs-x for this").
 - Naming: `/obs-<project-name>`, lowercased, hyphens for spaces (e.g. `/obs-brain2v`,
-  `/obs-excelon-cs`). Keep it short — it's typed often.
+  or `/obs-<your-project>` for anything else you track). Keep it short — it's typed often.
 
 ## What every `/obs-<project>` skill must do
 1. **Append-only stage log.** Each entry: what changed, why, what broke and how it was

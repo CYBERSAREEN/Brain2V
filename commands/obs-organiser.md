@@ -121,20 +121,37 @@ Every turn, prefer the cheapest path that's correct:
 Report, when relevant, that you used the index instead of a scan — it makes the
 efficiency visible and keeps the discipline honest.
 
-## 7. Keep Brain2V in sync (standing duty, pre-authorized — do not ask each time)
-Whenever any `/obs-*` command file, a shared protocol under `~/.claude/knowledge/`, or a
-hook script under `~/.claude/hooks/` is created or edited, sync the changed file(s) into
-`/home/kali/Desktop/Brain2V` (mirroring the same relative path: `commands/`,
-`knowledge/`, `hooks/scripts/`), regenerate `hooks/settings.hooks.json` from the live
-`~/.claude/settings.json`, then commit and push to `github.com/CYBERSAREEN/Brain2V`.
-Before every push: secret-scan the staged diff, and scan it for any reference to
-external tools this project deliberately doesn't credit (check `[[obs_commands_built]]`-
-style memory for which names those are, without spelling them out in this file — this
-file is itself part of the repo). This was explicitly pre-authorized by the user
-("jab bhi kuch bhi update karu brain2v me push karde") — don't ask permission for the
-push itself each time; do still say plainly, after the fact, what was pushed and the
-commit it landed in. If a secret or an undesired reference is ever found in the diff,
-stop and flag it before pushing rather than pushing anyway.
+## 7. Keep Brain2V in sync (config-driven, per-installer opt-in)
+This repo is public and installed by people other than its original author, so the sync
+target is **never hardcoded here** — it's read from a local, git-ignored config the
+installer owns: `~/.claude/brain2v.sync.json`:
+```json
+{ "enabled": false, "repo_path": "", "remote": "" }
+```
+- If the file is missing, or `enabled` is `false`, or `repo_path`/`remote` are empty:
+  this standing duty is a no-op. Say so once if a sync-worthy edit happens, then stay
+  quiet about it — don't nag every turn, and never attempt a push to a repo/remote that
+  isn't explicitly configured.
+- If populated and `enabled: true`: whenever any `/obs-*` command file, a shared protocol
+  under `~/.claude/knowledge/`, or a hook script under `~/.claude/hooks/` is created or
+  edited, sync the changed file(s) into `repo_path` (mirroring the same relative path:
+  `commands/`, `knowledge/`, `hooks/scripts/`), regenerate `hooks/settings.hooks.json`
+  from the live `~/.claude/settings.json`, then commit and push to `remote` using
+  whatever `gh`/`git` identity is already active on this machine (never a hardcoded
+  username — that identity is the installer's own, set up via `/personality` or plain
+  `gh auth login`, and is expected to be overwritten freely after setup).
+- Before every push: secret-scan the staged diff, and scan it for any reference to
+  external tools this project deliberately doesn't credit (check `[[obs_commands_built]]`-
+  style memory for which names those are, without spelling them out in this file — this
+  file is itself part of the repo).
+- A config with `enabled: true` is standing, pre-authorized consent from whoever set that
+  flag on their own machine — don't ask permission for the push itself each time; do
+  still say plainly, after the fact, what was pushed and the commit it landed in. If a
+  secret or an undesired reference is ever found in the diff, stop and flag it before
+  pushing rather than pushing anyway.
+- `install.sh` writes this config as a disabled template (`enabled: false`, empty
+  `repo_path`/`remote`) on every fresh install — a new installer must deliberately opt in
+  and point it at their *own* fork/repo before any auto-push can ever fire.
 
 ## 8. This is a live orchestration read, not a saved artifact
 Like `/obs-guide` and `/obs-context-code`, `/obs-organiser` does not save its own note —

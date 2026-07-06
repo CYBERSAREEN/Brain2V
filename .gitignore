@@ -8,6 +8,7 @@
 .secrets/
 .personality.txt
 *personalities.env
+brain2v.sync.json
 *.pem
 *.key
 id_rsa

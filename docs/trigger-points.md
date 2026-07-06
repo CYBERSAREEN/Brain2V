@@ -21,6 +21,8 @@ Brain2V must be given a row here.**
 | `/obs-introduction` | very first run on a fresh install, no persona/profile yet | organiser decision | auto-offer once; never re-run over an existing profile unasked |
 | `/obs-skill-maker` | right after `/obs-introduction` completes a profile | organiser decision | auto-offer; output is a draft in `pending-skills/`, never routed to until verified |
 | `/obs-<project>` (e.g. `/obs-brain2v`) | sustained work on a project with no matching project skill yet | organiser decision | offer to create, per `knowledge/obs-project-tracking-protocol.md` |
+| `/obs-spine` | every organiser session, first, before any routing | organiser step 1 | auto — see `knowledge/obs-spine-protocol.md` |
+| `/obs-adapt` | `/obs-spine` reports `upgrade` mode, or a fresh install's first run (baseline manifest) | organiser decision | offer, never auto-run |
 | `/obs-code-personality` | about to build/test → load build DNA; or a stated design/methodology/report/template preference | organiser decision | auto-load before building; auto-record on explicit preference, else offer |
 | `/obs-life` | user shares a life/career update | organiser decision | auto on explicit share; else offer |
 | `/obs-optimiser` | "which tool for X?", or a tool outcome to record | organiser decision | offer recommendation; auto-record reported outcome |

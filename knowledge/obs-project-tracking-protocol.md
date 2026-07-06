@@ -46,6 +46,19 @@ and ongoing: the running history of one specific project, however many personas 
 skill-sets touch it. A single project can be owned by a persona whose workflow skill also
 exists — both link to each other, neither replaces the other.
 
+## Graph visibility — Skills/ stub notes
+Skill definitions themselves (`~/.claude/commands/*.md`) live outside the vault entirely,
+so Obsidian's graph has nothing to draw for them unless a vault-side pointer exists per
+skill. Any project that documents a skill family (Brain2V's own `/obs-brain2v` being the
+first case) should have a matching `<vault>/Skills/<name>.md` stub per skill actually
+installed on that machine: a one-liner description + argument-hint pulled from the
+command file's own frontmatter, its source path, a category tag, and a backlink to the
+owning project note. The project note itself then links out to every stub it owns, so the
+project becomes the graph's hub. `/obs-adapt` is what keeps these stubs in sync per
+installer (add missing, update stale descriptions, never delete) — this is deliberately
+never shipped as vault content in a repo; each installer's own stubs reflect their own
+actual install.
+
 ## Honest limit
 This is a documentation habit, not automation magic — nothing runs itself. The organiser
 offering to create one, and the user (or a future capture hook) actually appending stage

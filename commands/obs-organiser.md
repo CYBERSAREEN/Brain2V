@@ -30,6 +30,13 @@ the organiser's whole speed advantage comes from those two indexes.
 
 ## 1. Initialize (cheap — do NOT scan the vault)
 On first invocation in a session:
+- **Call `/obs-spine` first, before anything else below.** A "brain" routing requests
+  without knowing whether this machine is the author's own (mid-build), a brand-new
+  installer, or an existing installer updating is routing on a false assumption — see
+  `~/.claude/knowledge/obs-spine-protocol.md`. The detected mode governs the rest of this
+  session: `fresh-install` means offer `/obs-introduction` unprompted if it hasn't run
+  yet; `upgrade` means offer `/obs-adapt` before assuming the local install reflects the
+  current repo; `author` means proceed exactly as this file's own §7 already describes.
 - Confirm `<vault>/.obs-index/index.json` and the `.obs-index/by-*/` symlink trees exist.
   If the index is missing or looks stale (notes newer than the index), rebuild it from
   the vault once (replay every `/obs-*` note through the write path in the index
@@ -83,6 +90,8 @@ This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
 | `/obs-introduction` | very first run on a fresh install with no persona/profile yet | auto-offer once on first session; never re-run over an existing profile without being asked |
 | `/obs-skill-maker` | right after `/obs-introduction` completes a new profile | auto-offer; the generated skill is a **draft in `pending-skills/`**, never wired into routing until explicitly verified by the repo owner |
 | `/obs-<project>` (e.g. `/obs-brain2v`) | sustained work on a project with no matching project skill yet | offer to create one, per `obs-project-tracking-protocol.md`; once it exists, trigger it same as any capture skill when that project's work happens |
+| `/obs-spine` | every organiser session, first, before any routing | auto — this is what step 1 above always calls first |
+| `/obs-adapt` | `/obs-spine` reports `upgrade` mode (repo has moved ahead of this install); or a fresh install's very first run, to write the baseline manifest | offer, never auto-run — merging files is a bigger action than a routine trigger, even though it never overwrites locally-modified content |
 | `/obs-life` | user shares a life/career update (role change, priorities, constraints) | auto on explicit share; else offer |
 | `/obs-optimiser` | "which tool/framework for X?" (automation, learning, pentest tooling), or after a tool was used → record outcome | offer recommendation; auto-record outcome when the user reports one |
 | `/obs-n8n` / `/obs-crewai` / `/obs-hermes` | user shares knowledge/config/outcome about that automation tool | auto on explicit share; else offer. These feed `/obs-optimiser`. |

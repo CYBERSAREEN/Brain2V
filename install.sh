@@ -17,7 +17,7 @@ echo "Installing commands -> $CLAUDE_DIR/commands/"
 for f in "$REPO_DIR"/commands/*.md; do
   name="$(basename "$f")"
   if [ -e "$CLAUDE_DIR/commands/$name" ]; then
-    echo "  [skip] $name already exists (remove it first to reinstall)"
+    echo "  [skip] $name already exists (run /obs-adapt inside Claude Code to safely merge updates instead of re-running this installer)"
   else
     cp "$f" "$CLAUDE_DIR/commands/"
     echo "  [ok]   $name"
@@ -30,6 +30,7 @@ CORE_SKILLS=(
   obs-understanding obs-learn obs-learn-cyber obs-mistakes obs-distil obs-personality
   obs-code-personality obs-life obs-optimiser obs-n8n obs-crewai obs-hermes obs-list
   obs-connect trace obs-tokenguard obs-requests obs-introduction obs-skill-maker
+  obs-spine obs-adapt
 )
 missing_from_repo=()
 missing_from_install=()
@@ -68,6 +69,33 @@ for f in "$REPO_DIR"/hooks/scripts/*; do
   fi
 done
 
+# Version marker + checksum manifest — the baseline /obs-adapt diffs future updates
+# against. Only ever written/refreshed for files that exist in $CLAUDE_DIR right now;
+# never overwrites content, just records what's there.
+VERSION_FILE="$CLAUDE_DIR/.brain2v-version"
+MANIFEST_FILE="$CLAUDE_DIR/.brain2v-manifest.json"
+cp "$REPO_DIR/VERSION" "$VERSION_FILE"
+echo "  [ok]   .brain2v-version ($(cat "$VERSION_FILE"))"
+
+python3 - "$REPO_DIR" "$CLAUDE_DIR" "$MANIFEST_FILE" <<'PYEOF'
+import hashlib, json, sys, pathlib
+repo_dir, claude_dir, manifest_file = (pathlib.Path(p) for p in sys.argv[1:4])
+manifest = {}
+for sub in ("commands", "knowledge"):
+    for f in sorted((repo_dir / sub).glob("*.md")):
+        rel = f"{sub}/{f.name}"
+        local = claude_dir / rel
+        if local.exists():
+            manifest[rel] = hashlib.sha256(local.read_bytes()).hexdigest()
+for f in sorted((repo_dir / "hooks" / "scripts").glob("*")):
+    rel = f"hooks/{f.name}"
+    local = claude_dir / "hooks" / f.name
+    if local.exists():
+        manifest[rel] = hashlib.sha256(local.read_bytes()).hexdigest()
+manifest_file.write_text(json.dumps(manifest, indent=2, sort_keys=True))
+print(f"  [ok]   .brain2v-manifest.json ({len(manifest)} files recorded)")
+PYEOF
+
 SYNC_CONFIG="$CLAUDE_DIR/brain2v.sync.json"
 if [ -e "$SYNC_CONFIG" ]; then
   echo "  [skip] brain2v.sync.json already exists (leaving your settings as-is)"
@@ -96,6 +124,6 @@ echo "  1. run 'gh auth login' (or set up git) with YOUR OWN GitHub account"
 echo "  2. edit $SYNC_CONFIG and set enabled:true, repo_path, and remote"
 echo "    to your own fork/repo — never CYBERSAREEN/Brain2V"
 echo
-echo "Done. Open Claude Code and run /obs-introduction first if this is your first time"
-echo "setting up Brain2V — it asks what you do and hands off to /obs-skill-maker to build"
-echo "a skill around your actual work. Otherwise, run /obs-organiser to start."
+echo "Done. Open Claude Code — /obs-organiser calls /obs-spine first to work out which"
+echo "flow applies to you (first-time setup vs. updating an existing install) and takes"
+echo "it from there. If this really is your first time, expect /obs-introduction next."

@@ -100,3 +100,19 @@ Any project under active development can get its own `/obs-<project-name>` skill
 `/obs-brain2v`, documenting Brain2V's own build) — a durable, stage-by-stage log of that
 project's updates, errors, and design reasoning from build through production, always
 backlinked to the persona that owns it. See `knowledge/obs-project-tracking-protocol.md`.
+
+## The spine — one flow doesn't fit every machine
+
+`/obs-organiser` routes *what* to invoke, but which flow is even correct depends on
+context it can't assume: is this the author's own machine mid-build, a brand-new
+installer, or an existing installer pulling an update over their own data? `/obs-spine`
+detects this (`author` / `fresh-install` / `upgrade`, via `~/.claude/brain2v.sync.json`,
+a version marker, and persona/intake state — see `knowledge/obs-spine-protocol.md`) and
+runs first, every organiser session, before any routing happens. In `upgrade` mode it
+hands off to `/obs-adapt`, which diffs the repo against a per-file checksum manifest
+(`~/.claude/.brain2v-manifest.json`) to add what's missing, update what's unchanged since
+the last sync, and never touch anything locally modified — the file-level version of the
+same principle as never overwriting a user's data. `/obs-adapt` also keeps each
+installer's own `Skills/` vault stubs in sync with whatever they actually have installed,
+which is how every installer gets the graph-visibility fix without any personal vault
+content ever shipping in the repo.

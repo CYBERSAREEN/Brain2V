@@ -31,6 +31,8 @@ obs-tokenguard
 obs-requests
 obs-introduction
 obs-skill-maker
+obs-spine
+obs-adapt
 ```
 
 ## Not core — generated or profile-specific, never a universal default

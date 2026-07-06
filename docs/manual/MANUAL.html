@@ -118,7 +118,7 @@
   <div class="meta">
     Repository: github.com/CYBERSAREEN/Brain2V<br>
     Generated: 2026-07-06 (updated same day — see §"Keeping this manual in sync")<br>
-    26 skills documented — no page limit, nothing abridged
+    28 skills documented — no page limit, nothing abridged
   </div>
 </div>
 
@@ -170,6 +170,10 @@
 
   <span class="grp">Project Tracking</span>
   <li><a href="#obs-brain2v">26. /obs-brain2v</a> — Brain2V's own project log (the /obs-&lt;project&gt; pattern)</li>
+
+  <span class="grp">Framework</span>
+  <li><a href="#obs-spine">27. /obs-spine</a> — which flow applies: author, fresh-install, or upgrade</li>
+  <li><a href="#obs-adapt">28. /obs-adapt</a> — safe merge: add/update, never overwrite your data</li>
 </ol>
 </div>
 
@@ -197,7 +201,7 @@ never dumped raw — so every future read costs a fraction of the tokens with no
 actually lost.</li>
 </ul>
 
-<p>This manual documents all 26 skills currently in the family — 24 core skills every
+<p>This manual documents all 28 skills currently in the family — 26 core skills every
 installer gets (see <code>knowledge/obs-core-family.md</code>), plus <code>/obs-pentest</code>
 (present only where an installer's own profile calls for it — never a universal default)
 and the <code>/obs-&lt;project&gt;</code> pattern (a new one created per project, demonstrated
@@ -1284,6 +1288,109 @@ came out of — without duplicating that post-mortem's full text here.</p>
 <p class="related"><b>Related:</b> <code>knowledge/obs-project-tracking-protocol.md</code>
 defines the general pattern this skill implements; backlinked to
 <a href="#obs-personality">Personalities/vedant.md</a> as its owning persona.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-spine">
+<h2>27. /obs-spine <span class="badge">Framework</span></h2>
+<div class="oneliner">Detects which of Brain2V's three operating modes applies right
+now — the author actively building it, a brand-new installer, or an existing installer
+updating — and tells the organiser which flow to follow. The framework /obs-organiser
+routes within.</div>
+
+<h3>What it does</h3>
+<p>A "brain" (<code>/obs-organiser</code>) that routes requests without knowing whether
+this machine is the author's own mid-build, a fresh install, or an existing install being
+updated is routing on a false assumption — one flow does not fit all three. Every
+organiser session calls <code>/obs-spine</code> first, before any routing, to read three
+cheap signals: whether <code>~/.claude/brain2v.sync.json</code> has <code>enabled:
+true</code> (only the author would opt into pushing straight back to their own repo —
+every other installer's config ships disabled); whether <code>~/.claude/.brain2v-version</code>
+exists and matches the repo's own <code>VERSION</code> file; and whether any persona has
+a completed <code>/obs-introduction</code> intake yet. From those three signals it names
+one of three modes — <code>author</code>, <code>fresh-install</code>, or
+<code>upgrade</code> — and hands the organiser a concrete next step instead of one
+assumed flow.</p>
+
+<div class="honest"><b>Honest limit:</b> this is signal-based detection, not certainty. A
+hand-edited config or a missing marker file can produce an ambiguous read. When signals
+don't cleanly match any of the three modes, this skill says so and asks which one
+actually applies rather than guessing — guessing wrong here risks exactly the kind of
+overwrite <code>/obs-adapt</code> exists to prevent.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Runs detection and reports the mode. Normally invoked automatically by the organiser's own step 1, not typed directly.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-spine</pre>
+<p>On the author's own machine: <code>brain2v.sync.json</code> has <code>enabled:
+true</code> → reports <b>author</b> mode, organiser proceeds exactly as its own §7
+already describes. On a colleague's fresh install with no prior Brain2V state: reports
+<b>fresh-install</b> → organiser offers <code>/obs-introduction</code> if it hasn't run
+yet. On that same colleague's machine six months later, after a <code>git pull</code>
+moved the repo ahead of their local <code>.brain2v-version</code>: reports
+<b>upgrade</b> → organiser offers <code>/obs-adapt</code>.</p>
+
+<p class="related"><b>Related:</b> <code>knowledge/obs-spine-protocol.md</code> defines
+the three modes and their signals in full; hands off to
+<a href="#obs-adapt">/obs-adapt</a> in upgrade mode.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-adapt">
+<h2>28. /obs-adapt <span class="badge">Framework</span></h2>
+<div class="oneliner">Safely merges a newer Brain2V version into an existing install —
+adds what's missing, updates what's unchanged since the last sync, and never touches
+anything locally modified or personal. Also keeps each installer's own Skills/ vault
+graph in sync with whatever they actually have installed.</div>
+
+<h3>What it does</h3>
+<p>A plain re-copy (what <code>install.sh</code> does on a genuinely fresh install) is
+unsafe the moment real data exists — personas, custom-generated skills, hand edits. This
+skill compares three things for every file the repo ships
+(<code>commands/</code>, <code>knowledge/</code>, <code>hooks/scripts/</code>): the
+repo's current content, the local file's current content, and a per-file SHA-256 hash
+recorded in <code>~/.claude/.brain2v-manifest.json</code> at the last install or adapt
+run. A file missing locally gets added. A file whose local hash still matches the
+manifest (untouched since the last sync) but whose repo content has moved on gets
+updated. A file whose local hash no longer matches the manifest — meaning the installer,
+or a generated skill, changed it since the last sync — is <b>always skipped</b>,
+regardless of whether the repo also changed it, and named in the report so the installer
+knows an update exists without it being silently applied over their own change.</p>
+
+<p>Separately, it keeps <code>Skills/&lt;name&gt;.md</code> vault stub notes (see
+<a href="#obs-brain2v">§26</a>'s graph-visibility pattern) in sync with whichever
+<code>/obs-*</code> commands this installer actually has — creating missing stubs,
+updating stale descriptions, and never deleting a stub for a skill that's gone, since a
+disappearing graph node is more confusing than a stale one. This is how every installer
+gets the same graph-visibility fix without any personal vault content ever shipping in
+the repo — each installer generates their own stubs for their own actual install.</p>
+
+<div class="honest"><b>Honest limit:</b> hash comparison only detects <i>that</i>
+something changed, not <i>what</i> or whether a skipped update was actually important —
+this skill will never attempt a 3-way content merge. Naming the skipped file plainly is
+the mitigation, not a substitute for the user reviewing it themselves if it matters.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Diffs the repo against this install and reports before doing anything; on a first-ever run (no manifest yet) it only builds the baseline manifest and touches nothing.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-adapt</pre>
+<p>Reports: 2 files added (two skills new since this installer's last sync), 1 file
+updated (a protocol doc that changed upstream and was never touched locally), 1 file
+skipped ("<code>commands/obs-code-personality.md</code> — locally modified, an update
+exists upstream but wasn't applied"), and 3 new <code>Skills/</code> stubs created for
+skills this installer already had but never got a graph node for.</p>
+
+<p class="related"><b>Related:</b> invoked by <a href="#obs-organiser">/obs-organiser</a>
+when <a href="#obs-spine">/obs-spine</a> reports upgrade mode; implements the
+graph-visibility half of <code>knowledge/obs-project-tracking-protocol.md</code>.</p>
 </section>
 
 </body>

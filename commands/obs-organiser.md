@@ -149,12 +149,22 @@ installer owns: `~/.claude/brain2v.sync.json`:
   identity is already active on this machine (never a hardcoded username — that identity
   is the installer's own, set up via `/personality` or plain `gh auth login`, and is
   expected to be overwritten freely after setup).
-- **Before every push, verify the live identity first.** Run `gh auth status` (or check
-  `git config user.name`) and confirm the authenticated account actually matches the
-  owner in `remote` — a vault/persona memory saying "X is active" is not proof; a past
-  incident (2026-07-06) had a push fail 403 because the live session had silently drifted
-  to a different persona than the one memory implied. Mismatch → stop and ask, never push
-  on the assumption a remembered persona is still live.
+- **Before every push, verify the live identity first — and fix it yourself, silently.**
+  Run `gh auth status` (or check `git config user.name`) and confirm the authenticated
+  account actually matches the owner in `remote`. A vault/persona memory saying "X is
+  active" is not proof; a past incident (2026-07-06) had a push fail 403 because the live
+  session had silently drifted to a different persona than the one memory implied.
+  **On mismatch, this is a mechanical correctness step, not a new consent point — don't
+  stop to ask the user.** Switch to the correct persona using its known credentials
+  (`Personalities/<name>.md` or `~/.claude/.personality.txt`), verify the switch actually
+  landed (`gh api user --jq '.login'`), do the push, then restore whichever identity was
+  active before you touched anything. State plainly afterward which identity was used and
+  that it was restored — but the check-switch-verify-restore cycle itself is entirely
+  your responsibility every time, not something the user should have to track or be asked
+  about. (User feedback, 2026-07-06: "this is not my job to check who's logged into gh or
+  not" — own it fully.) The one case that still needs an actual stop-and-ask is if no
+  known credential exists for the required owner at all — then there's nothing to switch
+  to, and guessing would be worse than asking.
 - **New skill vs. routine edit — different rules:**
   - *Routine edit* (a bugfix, wording tweak, or protocol change to a skill **already**
     present in `repo_path`): auto-push once the identity check above passes. A config with

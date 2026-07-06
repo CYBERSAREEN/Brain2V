@@ -107,7 +107,9 @@ the organiser assumes the whole family is present and routes accordingly.
 
 New `/obs-*` skills added later MUST be given a row here and in
 `Brain2V/docs/trigger-points.md` when created — that's how the organiser stays aware of
-the whole family.
+the whole family. They must also get a section in `docs/manual/MANUAL.html` (regenerate
+`Brain2V-Manual.pdf` from it) — the manual is hand-authored, not auto-generated, and
+already drifted stale once (2026-07-06) when this step was skipped.
 
 ## 5. Drive the loop, close it with learning
 The employee-style loop the user described:

@@ -117,8 +117,8 @@
   <div class="sub">Full Skill Manual — every /obs-* command, explained and demonstrated</div>
   <div class="meta">
     Repository: github.com/CYBERSAREEN/Brain2V<br>
-    Generated: 2026-07-06<br>
-    23 skills documented — no page limit, nothing abridged
+    Generated: 2026-07-06 (updated same day — see §"Keeping this manual in sync")<br>
+    26 skills documented — no page limit, nothing abridged
   </div>
 </div>
 
@@ -158,11 +158,18 @@
   <li><a href="#trace">20. /trace</a> — how an idea evolved over time</li>
 
   <span class="grp">Security</span>
-  <li><a href="#obs-pentest">21. /obs-pentest</a> — full pentest engagement agent</li>
+  <li><a href="#obs-pentest">21. /obs-pentest</a> — full pentest engagement agent (installer-specific, not shipped by default — see §21)</li>
 
   <span class="grp">Efficiency</span>
   <li><a href="#obs-tokenguard">22. /obs-tokenguard</a> — per-command token cost</li>
   <li><a href="#obs-requests">23. /obs-requests</a> — research your own prompts</li>
+
+  <span class="grp">Onboarding &amp; Custom Skills</span>
+  <li><a href="#obs-introduction">24. /obs-introduction</a> — first-run setup: what do you do?</li>
+  <li><a href="#obs-skill-maker">25. /obs-skill-maker</a> — generates a skill reflecting your work</li>
+
+  <span class="grp">Project Tracking</span>
+  <li><a href="#obs-brain2v">26. /obs-brain2v</a> — Brain2V's own project log (the /obs-&lt;project&gt; pattern)</li>
 </ol>
 </div>
 
@@ -190,12 +197,26 @@ never dumped raw — so every future read costs a fraction of the tokens with no
 actually lost.</li>
 </ul>
 
-<p>This manual documents all 23 skills currently in the family: what each one does, why
-it exists, exactly how to invoke it, and a worked example grounded in its real behavior —
-not aspirational copy. Wherever a skill has a genuine limitation (something it cannot
-actually do, or an approximation it makes), that limitation is stated plainly in a boxed
+<p>This manual documents all 26 skills currently in the family — 24 core skills every
+installer gets (see <code>knowledge/obs-core-family.md</code>), plus <code>/obs-pentest</code>
+(present only where an installer's own profile calls for it — never a universal default)
+and the <code>/obs-&lt;project&gt;</code> pattern (a new one created per project, demonstrated
+here via its first instance, <code>/obs-brain2v</code>). For each: what it does, why it
+exists, exactly how to invoke it, and a worked example grounded in its real behavior — not
+aspirational copy. Wherever a skill has a genuine limitation (something it cannot actually
+do, or an approximation it makes), that limitation is stated plainly in a boxed
 <b>Honest limit</b> note rather than glossed over. This is a deliberate house style across
 the whole project: the system is more useful when its guarantees are accurate.</p>
+
+<h3>Keeping this manual in sync</h3>
+<p>This manual is hand-authored HTML, converted to PDF (not auto-generated from the
+command files) — so nothing updates it automatically. Per the same rule that governs
+<code>docs/trigger-points.md</code>, adding, removing, or materially changing a
+<code>/obs-*</code> skill's behavior MUST include updating this manual (new/removed
+section, corrected count, corrected "Standing duty" description) and regenerating the PDF
+as part of that same change — not as an afterthought. A manual describing skills that no
+longer exist, or missing ones that do, is actively misleading, which is worse than no
+manual at all.</p>
 </div>
 
 <!-- ============================================================ -->
@@ -221,8 +242,8 @@ flagged to the user as the applicable skill.</p>
 automatically or ask first. Low-risk, additive actions (logging a learning, updating the
 index, briefing at session start) trigger automatically. Anything that writes
 credentials (<code>/obs-personality</code>), runs active tooling against a target
-(<code>/obs-pentest</code>), or is genuinely ambiguous gets asked about first, one line,
-so the user can override.</p>
+(<code>/obs-pentest</code>, where that skill is present at all — see §21), or is
+genuinely ambiguous gets asked about first, one line, so the user can override.</p>
 
 <p>Finally, the organiser owns the "employee-style" loop the whole system is built
 around: request → route → execute until the goal is met → learnings/mistakes captured
@@ -231,11 +252,17 @@ a unit of work, its job is to check the loop actually closed — was a mistake l
 its fix, was a reusable lesson saved — and close it if not.</p>
 
 <h3>Standing duty: keeping Brain2V in sync</h3>
-<p>The organiser also carries a pre-authorized standing responsibility: whenever any
-<code>/obs-*</code> command file, shared protocol, or hook script changes, it syncs the
-change into the Brain2V repository, secret-scans the diff, commits, and pushes — without
-asking permission for the push itself each time, though it always reports afterward what
-was pushed and to which commit.</p>
+<p>The organiser also carries a config-driven sync responsibility, read from a local,
+git-ignored <code>~/.claude/brain2v.sync.json</code> (never a hardcoded repo/path, since
+this project is installed by people other than its author). When enabled: a
+<b>routine edit</b> to a skill/protocol/hook already in the repo syncs, secret-scans,
+commits, and pushes automatically — no permission needed for the push itself, though it
+always reports afterward what was pushed and to which commit. A <b>brand-new skill
+file</b> always stops to ask first, regardless of the config — shipping a new capability
+to every installer is a bigger decision than a routine sync. Before any push, the
+organiser also verifies the live <code>gh</code>/git identity actually matches the
+target repo's owner and corrects it itself if not — this is the organiser's own
+responsibility to get right silently, never something the user needs to track or confirm.</p>
 
 <div class="honest"><b>Honest limit:</b> the organiser is a protocol in force for the
 session, re-invoked at defined trigger points — not an always-on daemon "watching
@@ -978,6 +1005,13 @@ material to work with.</p>
 (self-contained duplicate of /pentest), with continuous Obsidian vault logging of POCs
 and workflow so progress and learnings persist across sessions.</div>
 
+<div class="honest"><b>Not shipped by default.</b> This skill lives in the author's own
+local <code>~/.claude/commands/</code>, not in this repo's <code>commands/</code> folder —
+Brain2V is installed by people whose work has nothing to do with pentesting, and a
+hardcoded security skill made no sense as a universal default. If your own work needs
+something like this, <code>/obs-introduction</code> → <code>/obs-skill-maker</code> (§24,
+§25) generates the equivalent for what you actually do.</div>
+
 <h3>What it does</h3>
 <p>A complete, standalone pentest pipeline — scope enforcement first (reads
 <code>scope.md</code>, checks every target against it before any tool runs; a blanket
@@ -1113,6 +1147,143 @@ proceeding on that basis, go ahead?" instead of re-deriving the same misundersta
 
 <p class="related"><b>Related:</b> fires via the same <code>SessionEnd</code> hook as
 /obs-closeday. Feeds the organiser's routing confidence over time.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-introduction">
+<h2>24. /obs-introduction <span class="badge">Onboarding &amp; Custom Skills</span></h2>
+<div class="oneliner">First-run setup skill for a new Brain2V installer. Asks what the
+person does and what they want this setup for, then hands off to /obs-skill-maker to
+build a skill reflecting their actual work.</div>
+
+<h3>What it does</h3>
+<p>Brain2V doesn't assume every installer does the same kind of work — the person running
+<code>install.sh</code> from a GitHub browse could be a pentester, a chartered
+accountant, or anyone else. <code>/obs-introduction</code> is the front door for exactly
+that installer: it checks whether a persona/profile already exists first (so it never
+silently overwrites or duplicates one), then asks — as a short conversation, not a rigid
+form — what the person does, what they actually want the setup to help with day to day,
+and any tools/workflows already central to that work. The answers are written as a
+<code>## Work profile</code> section into <code>Personalities/&lt;name&gt;.md</code>
+(created fresh, or appended to an existing credential-only persona note from
+<code>/obs-personality</code>).</p>
+
+<div class="honest"><b>Honest limit:</b> this skill only gathers and stores the profile —
+it does not build any workflow skill itself. That is deliberately kept as a separate step
+(<code>/obs-skill-maker</code>) so the low-risk intake and the generation (which produces
+a draft needing verification) are never conflated.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Runs the intake conversation for a new persona.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-introduction</pre>
+<p>"What do you do?" → "I'm a chartered accountant, run my own small practice." →
+"What do you want this set up to help with?" → "Tracking client filings and deadlines,
+mostly." The answers land in <code>Personalities/priya.md</code>'s Work profile section,
+and the skill offers to run <code>/obs-skill-maker</code> immediately rather than making
+the user type the next command themselves.</p>
+
+<p class="related"><b>Related:</b> <a href="#obs-skill-maker">/obs-skill-maker</a> reads
+this profile directly; <a href="#obs-organiser">/obs-organiser</a> auto-offers this once
+on a fresh install with no persona yet.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-skill-maker">
+<h2>25. /obs-skill-maker <span class="badge">Onboarding &amp; Custom Skills</span></h2>
+<div class="oneliner">Generates a "digital twin" skill reflecting a user's actual
+profession/workflow, from the profile /obs-introduction gathered. Output is a draft in
+pending-skills/ — never wired into routing until explicitly verified.</div>
+
+<h3>What it does</h3>
+<p>Reads the <code>## Work profile</code> section <code>/obs-introduction</code> wrote
+and drafts a new skill — named for the profession/use-case, e.g.
+<code>/obs-ca-workflow</code> for a chartered accountant — that reflects what that person
+would actually want tracked or automated: recurring document types, engagement structure,
+what "done" looks like at each stage, what mistakes are worth remembering. It deliberately
+reuses the rest of the family where it already fits (pointing at <code>/obs-mistakes</code>
+for error capture, <code>/obs-distil</code> for large document intake) rather than
+reinventing them inside the new skill, and follows the same shape every other
+<code>/obs-*</code> skill uses (frontmatter, a Tool setup step, an index-update step, a
+Related section back to the owning persona).</p>
+
+<p>The draft is written to <code>pending-skills/obs-&lt;slug&gt;.md</code> — not copied
+into <code>~/.claude/commands/</code> and not added to the organiser's trigger table.
+Whoever is running the session reviews it and confirms it actually reflects their work
+before it becomes usable; only then does it move into <code>commands/</code> and get a
+trigger-table row. A locally verified skill is personal to that installer — proposing it
+back to the public Brain2V repo for everyone is a separate, later decision, gated the same
+way any brand-new skill file is (organiser always asks first before that kind of push).</p>
+
+<div class="honest"><b>Honest limit:</b> this produces a first draft, not a finished
+product — nuance the intake conversation didn't surface won't be in it. The verification
+step is meant to be a real review, not a rubber stamp.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>&lt;persona-name&gt;</code></td><td>Generates from that persona's Work profile.</td></tr>
+<tr><td><code>(none)</code></td><td>Uses the most recently completed intake.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-skill-maker priya</pre>
+<p>Drafts <code>pending-skills/obs-ca-workflow.md</code> — client/engagement tracking,
+filing-deadline reminders wired to <code>/obs-mistakes</code> for anything that slipped,
+document intake routed through <code>/obs-distil</code>. Priya reviews it, confirms it
+matches her actual practice, and it becomes a live, routed skill for her installation.</p>
+
+<p class="related"><b>Related:</b> <a href="#obs-introduction">/obs-introduction</a> is
+the required upstream step; this is also the reason
+<a href="#obs-pentest">/obs-pentest</a> (§21) is no longer a universal default.</p>
+</section>
+
+<!-- ============================================================ -->
+<section class="skill" id="obs-brain2v">
+<h2>26. /obs-brain2v <span class="badge">Project Tracking</span></h2>
+<div class="oneliner">Documents the Brain2V project itself — updates, errors, and design
+ideology, stage by stage from build through production. The first concrete instance of
+the /obs-&lt;project&gt; pattern.</div>
+
+<h3>What it does</h3>
+<p>This is the reference implementation of a general pattern: any project under active
+development can get its own <code>/obs-&lt;project-name&gt;</code> skill, an append-only,
+durable log of that project's updates, errors, and — most importantly — the reasoning
+behind non-obvious decisions, kept separate from what git log already provides. Each
+entry records what changed, why, what broke and how (linked to, not duplicated from,
+<code>Mistakes/mistakes.md</code> or <code>learnings.md</code>), and which stage the
+project is actually in: <code>idea → build → testing → production</code>. Every such
+skill mandatorily backlinks to the persona that owns the project, so opening the persona
+note shows every project tied to them and vice versa, automatically via Obsidian's own
+backlinks.</p>
+
+<div class="honest"><b>Honest limit:</b> this is a documentation habit, not automation —
+nothing runs itself. It stays current only if the organiser actually offers to create one
+when it notices sustained project work, and entries actually get appended as work
+happens; an <code>/obs-&lt;project&gt;</code> skill nobody updates is exactly as stale as
+a journal nobody closes out.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Appends a new stage-log entry, gathering material from this session.</td></tr>
+<tr><td><code>&lt;headline&gt;</code></td><td>Uses that as the entry's headline instead of asking.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-brain2v Config-driven GitHub sync target shipped</pre>
+<p>Appends a dated entry to <code>Projects/Brain2V.md</code> under
+<code>## Stage log</code>: what changed, why (the repo is public and installed by people
+other than its author), and a link to the <code>Mistakes/mistakes.md</code> entry the fix
+came out of — without duplicating that post-mortem's full text here.</p>
+
+<p class="related"><b>Related:</b> <code>knowledge/obs-project-tracking-protocol.md</code>
+defines the general pattern this skill implements; backlinked to
+<a href="#obs-personality">Personalities/vedant.md</a> as its owning persona.</p>
 </section>
 
 </body>

@@ -58,3 +58,13 @@ When a new `/obs-<name>` is created:
 4. **Add a row to this table and to the table in `commands/obs-organiser.md`** — this is
    how the organiser becomes aware of it. A skill the organiser doesn't know about is a
    skill that never gets triggered.
+5. **Update `docs/manual/MANUAL.html` and regenerate `docs/manual/Brain2V-Manual.pdf`** —
+   add the new skill's section (or update/remove an existing one on a material behavior
+   change), fix the skill count in the titlepage and intro, then regenerate the PDF
+   (`chromium --headless --disable-gpu --no-sandbox --print-to-pdf=docs/manual/Brain2V-Manual.pdf --print-to-pdf-no-header file://<absolute path to MANUAL.html>`,
+   or `weasyprint` if chromium isn't available). The manual is hand-authored, not
+   auto-generated — nothing keeps it current except this step. A stale manual (describing
+   removed skills, missing new ones) is worse than no manual, so this is not optional.
+   This drifted once already (2026-07-06: the manual still listed `/obs-pentest` as
+   universal and was missing three new skills) — treat that as the standing example of
+   what skipping this step costs.

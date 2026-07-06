@@ -70,3 +70,9 @@ When a new `/obs-<name>` is created:
    This drifted once already (2026-07-06: the manual still listed `/obs-pentest` as
    universal and was missing three new skills) — treat that as the standing example of
    what skipping this step costs.
+6. **Create its `Skills/<name>.md` vault stub** (or run `/obs-adapt`'s graph-sync step,
+   which does this for every skill actually installed, not just the new one) — per
+   `knowledge/obs-project-tracking-protocol.md`'s graph-visibility pattern. Skipped once
+   already too (2026-07-06: `/obs-spine` and `/obs-adapt` shipped and were fully wired
+   everywhere else before anyone noticed neither had a stub, caught only when
+   `/obs-adapt` was actually run and its own graph-sync logic flagged the gap in itself).

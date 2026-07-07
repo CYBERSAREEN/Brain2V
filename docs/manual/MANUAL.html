@@ -173,6 +173,7 @@
   <span class="grp">Framework</span>
   <li><a href="#obs-spine">27. /obs-spine</a> — which flow applies: author, fresh-install, or upgrade</li>
   <li><a href="#obs-adapt">28. /obs-adapt</a> — safe merge: add/update, never overwrite your data</li>
+  <li><a href="#obs-security-protocol">29. /obs-security-protocol</a> — audits a repo for leaked credentials before they ever go public</li>
 </ol>
 </div>
 
@@ -1398,6 +1399,65 @@ skills this installer already had but never got a graph node for.</p>
 <p class="related"><b>Related:</b> invoked by <a href="#obs-organiser">/obs-organiser</a>
 when <a href="#obs-spine">/obs-spine</a> reports upgrade mode; implements the
 graph-visibility half of <code>knowledge/obs-project-tracking-protocol.md</code>.</p>
+</section>
+
+<section class="skill" id="obs-security-protocol">
+<h2>29. /obs-security-protocol <span class="badge">Security</span></h2>
+<div class="oneliner">Audits a repo (local history + GitHub remote) for leaked API
+keys/tokens, checks .gitignore hygiene, and offers an opt-in hook so a real secret never
+gets committed or pushed by accident.</div>
+
+<h3>What it does</h3>
+<p>Read-only by default — this skill never force-pushes, rewrites history, or deletes
+anything on its own; a finding gets reported with a recommended fix, not auto-applied.
+Four checks per run: an exact-value scan of the <b>full</b> <code>git log --all -p</code>
+history (not just HEAD — a credential removed in a later commit was still leaked if it
+was ever pushed) against whichever real credentials the installer has on file for the
+relevant identity; a generic pattern-regex scan for secret-shaped strings not tied to a
+known value (GitHub PAT, AWS key, private-key header, Supabase/Vercel/Render keys,
+OpenAI-style keys, generic <code>key=value</code> assignments — canonical list lives in
+<code>knowledge/obs-security-protocol.md</code>); a <code>.gitignore</code> coverage
+check for credential-shaped filenames; and, if the remote is GitHub, a visibility +
+collaborator + deploy-key + native secret-scanning check run as the repo owner (identity
+switched to silently for this read-only check, then restored to whatever was active
+before).</p>
+
+<p>Two enforcement layers work together, and neither depends on the other being present.
+<a href="#obs-organiser">/obs-organiser</a> owns this as a standing duty on every
+commit/push it performs itself — it runs the pattern-scan silently every time, whether
+or not anything else is installed. Separately, this skill can offer (never auto-wire) a
+genuine <code>PreToolUse</code> hook on <code>Bash</code>
+(<code>hooks/scripts/security-secret-scan.sh</code> +
+<code>hooks/scripts/security-secret-scan.py</code>) that intercepts <i>any</i>
+<code>git commit</code>/<code>git push</code> machine-wide, not just orchestrated ones —
+confirmed with the installer before it starts intercepting commits, since that's a
+standing behavior change beyond this skill's own scope.</p>
+
+<div class="honest"><b>Honest limit:</b> this is a pattern-based scanner, not a secrets
+database — it catches the shapes in its table plus any exact value it's told about, not
+every possible credential format. A genuinely novel token format with no recognizable
+prefix could still slip through; treat this as a strong safety net, not a guarantee.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Audits the current project's repo.</td></tr>
+<tr><td><code>&lt;path or repo&gt;</code></td><td>Audits a specific repo instead.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-security-protocol</pre>
+<p>Reports PASS/FAIL with specifics (which commit, which file, which pattern matched)
+but never the matched value itself, then documents the result to the vault
+(<code>Security/&lt;repo&gt;-security-audit-&lt;date&gt;.md</code>) so it's discoverable
+later via <code>/trace</code> or surfaced by <code>/obs-guide</code>, same as every other
+<code>/obs-*</code> finding.</p>
+
+<p class="related"><b>Related:</b> <code>knowledge/obs-security-protocol.md</code> is the
+living protocol doc — update its pattern table and standing rules there first, this
+skill and the organiser's duty both read from it. Distinct from a general OWASP code
+review (the separate <code>security-auditor</code> agent) — this skill is specifically
+about credential leakage, not code vulnerabilities.</p>
 </section>
 
 </body>

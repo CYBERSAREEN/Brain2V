@@ -1,10 +1,7 @@
 {
-  "$comment": "Plugin marketplaces Brain2V auto-installs at setup. The organiser (/obs-organiser via knowledge/obs-plugin-routing.md) decides when each is actually used. Entries with verified:false have slugs that must be confirmed on first install — the installer tries them and reports failures instead of aborting.",
+  "$comment": "Plugin marketplaces Brain2V auto-installs at setup. The organiser (/obs-organiser via knowledge/obs-plugin-routing.md) decides when each is actually used. gstack/marketing-skills/social-media-skills were dropped 2026-07-10 — their guessed slugs were confirmed wrong (invalid format or 404); re-add once real sources are known.",
   "marketplaces": [
-    { "name": "superpowers",         "source": "obra/superpowers",              "verified": true,  "purpose": "battle-tested engineering skills: planning, debugging, TDD, subagent patterns" },
-    { "name": "claude-skills",       "source": "anthropics/skills",             "verified": true,  "purpose": "Anthropic's official skill library: docs, spreadsheets, PDFs, design" },
-    { "name": "gstack",              "source": "gstack",                        "verified": false, "purpose": "as named by the owner — slug to confirm on first install" },
-    { "name": "marketing-skills",    "source": "coreyhaines/marketing-skills",  "verified": false, "purpose": "marketing copy, positioning, SEO, landing pages" },
-    { "name": "social-media-skills", "source": "social-media-skills",           "verified": false, "purpose": "content calendars, platform-native posts, engagement" }
+    { "name": "superpowers",   "source": "obra/superpowers",  "verified": true, "purpose": "battle-tested engineering skills: planning, debugging, TDD, subagent patterns" },
+    { "name": "claude-skills", "source": "anthropics/skills", "verified": true, "purpose": "Anthropic's official skill library: docs, spreadsheets, PDFs, design" }
   ]
 }

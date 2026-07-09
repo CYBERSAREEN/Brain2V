@@ -40,3 +40,4 @@ pending-skills/*
 .DS_Store
 *.swp
 node_modules/
+app/config.json

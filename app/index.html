@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BRAIN2V — Vault OS</title>
+<style>
+  :root {
+    --bg: #060806; --panel: #0a0f0a; --line: #16321a;
+    --ink: #b8ffc2; --dim: #4e7a55; --hot: #52ff7a; --amber: #ffd952; --red: #ff5252;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--bg); color: var(--ink);
+    font: 13px/1.5 "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+    height: 100vh; overflow: hidden; display: flex; flex-direction: column;
+  }
+  header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 18px; border-bottom: 1px solid var(--line);
+  }
+  header .brand { font-weight: 700; letter-spacing: .35em; color: var(--hot); }
+  header .clock { color: var(--dim); font-variant-numeric: tabular-nums; }
+  main { flex: 1; display: grid; grid-template-columns: 260px 1fr 300px; gap: 1px; background: var(--line); min-height: 0; }
+  section { background: var(--bg); padding: 14px; overflow-y: auto; min-height: 0; }
+  h2 { font-size: 10px; letter-spacing: .25em; color: var(--dim); text-transform: uppercase; margin-bottom: 10px; }
+  .stat { margin-bottom: 14px; }
+  .stat b { display: block; font-size: 26px; color: var(--hot); font-variant-numeric: tabular-nums; }
+  .stat span { color: var(--dim); font-size: 11px; }
+  .row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px dotted var(--line); font-size: 12px; }
+  .row em { color: var(--dim); font-style: normal; }
+  #graphwrap { position: relative; display: flex; flex-direction: column; }
+  canvas { flex: 1; width: 100%; min-height: 0; }
+  #bigcount {
+    position: absolute; bottom: 18px; left: 0; right: 0; text-align: center;
+    font-size: 40px; color: var(--hot); text-shadow: 0 0 24px rgba(82,255,122,.45);
+    font-variant-numeric: tabular-nums; pointer-events: none;
+  }
+  #bigcount small { display: block; font-size: 10px; letter-spacing: .3em; color: var(--dim); }
+  .svc { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 12px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
+  .dot.ok { background: var(--hot); box-shadow: 0 0 8px rgba(82,255,122,.6); }
+  .dot.warn { background: var(--amber); }
+  .svc em { color: var(--dim); font-style: normal; margin-left: auto; font-size: 10px; }
+  ul { list-style: none; }
+  footer { border-top: 1px solid var(--line); padding: 6px 18px; color: var(--dim); font-size: 11px; display: flex; justify-content: space-between; }
+  a { color: var(--hot); text-decoration: none; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; grid-template-rows: auto 50vh auto; } body { overflow: auto; } }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">B.R.A.I.N.2.V</span>
+  <span id="vaultpath" style="color:var(--dim);font-size:11px"></span>
+  <span class="clock" id="clock"></span>
+</header>
+<main>
+  <section id="left">
+    <h2>Vault Metrics</h2>
+    <div class="stat"><b id="s-notes">–</b><span>notes</span></div>
+    <div class="stat"><b id="s-words">–</b><span>words captured</span></div>
+    <div class="stat"><b id="s-links">–</b><span>connections</span></div>
+    <div class="stat"><b id="s-learn">–</b><span>learnings logged</span></div>
+    <div class="stat"><b id="s-mist">–</b><span>mistakes never repeated</span></div>
+    <h2 style="margin-top:16px">Folders</h2>
+    <div id="folders"></div>
+  </section>
+  <section id="graphwrap">
+    <canvas id="graph"></canvas>
+    <div id="bigcount">–<small>WORDS IN THE SECOND BRAIN</small></div>
+  </section>
+  <section id="right">
+    <h2>Services</h2>
+    <div id="services"></div>
+    <h2 style="margin-top:16px">God Nodes</h2>
+    <div id="gods"></div>
+    <h2 style="margin-top:16px">Recent Activity</h2>
+    <ul id="recent"></ul>
+  </section>
+</main>
+<footer>
+  <span>BRAIN2V — your second brain, given shape · <a href="/graphify">semantic graph →</a></span>
+  <span id="gen"></span>
+</footer>
+<script>
+const $ = (id) => document.getElementById(id)
+const fmt = (n) => n.toLocaleString('en-US')
+setInterval(() => { $('clock').textContent = new Date().toLocaleTimeString('en-GB') }, 1000)
+
+let nodes = [], links = []
+async function loadVault() {
+  const d = await (await fetch('/api/vault')).json()
+  $('s-notes').textContent = fmt(d.totals.notes)
+  $('s-words').textContent = fmt(d.totals.words)
+  $('s-links').textContent = fmt(d.totals.links)
+  $('s-learn').textContent = fmt(d.totals.learnings)
+  $('s-mist').textContent = fmt(d.totals.mistakes)
+  $('bigcount').innerHTML = fmt(d.totals.words) + '<small>WORDS IN THE SECOND BRAIN</small>'
+  $('vaultpath').textContent = d.vaultPath
+  $('gen').textContent = 'scan ' + new Date(d.generatedAt).toLocaleTimeString('en-GB')
+  $('folders').innerHTML = Object.entries(d.folders).sort((a,b)=>b[1]-a[1]).slice(0,10)
+    .map(([f,c]) => `<div class="row"><span>${f}</span><em>${c}</em></div>`).join('')
+  $('gods').innerHTML = d.godNodes
+    .map(g => `<div class="row"><span>${g.name}</span><em>${g.degree}°</em></div>`).join('')
+  $('recent').innerHTML = d.recent
+    .map(r => `<li class="row"><span>${r.name}</span><em>${new Date(r.mtime).toLocaleDateString('en-GB',{day:'2-digit',month:'short'})}</em></li>`).join('')
+  if (!nodes.length) initGraph(d.graph)
+}
+async function loadStatus() {
+  const s = await (await fetch('/api/status')).json()
+  const rows = [
+    ['Obsidian vault', s.obsidian.installed, s.obsidian.note],
+    ['Claude Code', s.claude.installed, s.claude.note],
+    ['Graphify engine', s.graphify.installed, s.graphify.graphBuilt ? 'graph built' : 'graph not built yet'],
+    ['n8n automation', s.n8n.installed, s.n8n.running ? 'running :5678' : (s.n8n.installed ? 'installed, stopped' : 'not installed')],
+  ]
+  $('services').innerHTML = rows.map(([name, ok, note]) =>
+    `<div class="svc"><span class="dot ${ok ? 'ok' : ''}"></span>${name}<em>${note}</em></div>`).join('')
+}
+
+// Minimal force-directed layout on canvas — no libraries.
+function initGraph(g) {
+  const canvas = $('graph'), ctx = canvas.getContext('2d')
+  const cap = 420 // render cap for very large vaults
+  const keep = new Set(g.nodes.slice().sort((a,b)=>b.degree-a.degree).slice(0, cap).map(n=>n.id))
+  nodes = g.nodes.filter(n => keep.has(n.id)).map(n => ({...n, x: Math.random(), y: Math.random(), vx:0, vy:0}))
+  const idx = new Map(nodes.map((n,i)=>[n.id,i]))
+  links = g.links.filter(([a,b]) => keep.has(a) && keep.has(b)).map(([a,b]) => [idx.get(a), idx.get(b)])
+
+  function resize() {
+    canvas.width = canvas.clientWidth * devicePixelRatio
+    canvas.height = canvas.clientHeight * devicePixelRatio
+  }
+  resize(); addEventListener('resize', resize)
+
+  function tick() {
+    const W = canvas.width, H = canvas.height, cx = W/2, cy = H/2
+    for (const n of nodes) { // centre gravity + slight repulsion via grid approximation
+      n.vx += (cx - n.x*W) * 0.00002 * W/W
+      n.vy += (cy - n.y*H) * 0.00002
+    }
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i]
+      for (let j = i+1; j < i+18 && j < nodes.length; j++) {
+        const b = nodes[j]
+        let dx = (a.x-b.x), dy = (a.y-b.y)
+        const d2 = dx*dx + dy*dy + 0.0004
+        const f = 0.000012 / d2
+        a.vx += dx*f; a.vy += dy*f; b.vx -= dx*f; b.vy -= dy*f
+      }
+    }
+    for (const [ai, bi] of links) {
+      const a = nodes[ai], b = nodes[bi]
+      const dx = b.x-a.x, dy = b.y-a.y
+      a.vx += dx*0.002; a.vy += dy*0.002
+      b.vx -= dx*0.002; b.vy -= dy*0.002
+    }
+    for (const n of nodes) {
+      n.x = Math.min(0.98, Math.max(0.02, n.x + n.vx)); n.vx *= 0.9
+      n.y = Math.min(0.98, Math.max(0.02, n.y + n.vy)); n.vy *= 0.9
+    }
+    ctx.clearRect(0,0,W,H)
+    ctx.strokeStyle = 'rgba(82,255,122,0.10)'
+    ctx.beginPath()
+    for (const [ai,bi] of links) {
+      ctx.moveTo(nodes[ai].x*W, nodes[ai].y*H); ctx.lineTo(nodes[bi].x*W, nodes[bi].y*H)
+    }
+    ctx.stroke()
+    for (const n of nodes) {
+      const r = Math.min(7, 1.5 + n.degree*0.35) * devicePixelRatio
+      ctx.fillStyle = n.degree > 8 ? '#52ff7a' : 'rgba(184,255,194,0.55)'
+      ctx.beginPath(); ctx.arc(n.x*W, n.y*H, r, 0, 7); ctx.fill()
+    }
+    requestAnimationFrame(tick)
+  }
+  tick()
+}
+
+loadVault(); loadStatus()
+setInterval(loadVault, 30_000); setInterval(loadStatus, 15_000)
+</script>
+</body>
+</html>

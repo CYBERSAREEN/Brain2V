@@ -101,3 +101,47 @@ Brain2V is designed to be public-safe:
 ## License
 
 MIT — see [LICENSE](./LICENSE).
+
+---
+
+## Brain2V as an app (v2)
+
+Beyond the skill system, Brain2V ships a local **application layer** — Claude Code
+installs and drives it for you:
+
+- **`app/`** — a zero-dependency Node dashboard (`node app/server.js` → `http://localhost:7180`).
+  Reads your vault live: note/word/link counts, learnings & mistakes logged, folder
+  breakdown, a force-directed wikilink graph, "god nodes", recent activity, and a
+  **services panel** showing Graphify / n8n / Claude / Obsidian status at a glance.
+- **Graphify** ([graphify.net](https://graphify.net), MIT) — the semantic
+  knowledge-graph engine that gives the vault a queryable *shape*. Built graph is served
+  at `/graphify`. See `knowledge/obs-mcp-integration.md`.
+- **n8n** — self-hosted, **local** automation (`n8n start` → `:5678`). Every user runs it
+  on their own machine; workflows are captured via `/obs-n8n` and routed by the organiser.
+- **Plugin marketplaces** (`plugins.json`) — superpowers, claude-skills, marketing-skills,
+  social-media-skills, gstack. Auto-added at setup; `/obs-organiser` decides when each is
+  used per `knowledge/obs-plugin-routing.md`.
+
+### Setup (Claude drives this — see `CLAUDE.md`)
+
+```bash
+./install.sh              # skills + protocols + hooks
+./setup/setup-services.sh # Graphify, n8n, plugin marketplaces, dashboard config
+# set app/config.json -> vaultPath, then:
+graphify <your-vault>     # build the semantic graph
+node app/server.js        # dashboard  -> :7180
+n8n start                 # automation -> :5678
+```
+
+## Acknowledgements & upstream tools
+
+Brain2V stands on open-source work by these projects and creators:
+
+- **[Graphify](https://github.com/Graphify-Labs/graphify)** — Safi Shamsi (MIT) — the knowledge-graph engine.
+- **[n8n](https://github.com/n8n-io/n8n)** — fair-code local automation.
+- **[superpowers](https://github.com/obra/superpowers)** — Jesse Vincent — engineering skill marketplace.
+- **[Anthropic Skills](https://github.com/anthropics/skills)** — official Claude skill library.
+- **marketing-skills / social-media-skills / gstack** — community skill marketplaces (see `plugins.json`).
+
+Feature-tool inspiration (from the reference set): Hyperframes (HeyGen), Claude Ads
+(AgriciDaniel), Open Higgsfield AI (Anil-matcha) — surveyed as candidate integrations.

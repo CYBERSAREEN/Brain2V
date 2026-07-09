@@ -27,6 +27,8 @@ check "graphify skill registered for claude" test -f "$HOME/.claude/skills/graph
 check "graphify graph built for vault" test -n "$VAULT_PATH" -a -f "$VAULT_PATH/graphify-out/graph.json"
 check "claude plugin marketplace: superpowers" bash -c "claude plugin marketplace list 2>/dev/null | grep -qi superpowers"
 check "claude plugin marketplace: claude-skills" bash -c "claude plugin marketplace list 2>/dev/null | grep -qi anthropic-agent-skills"
+check "claude plugin marketplace: marketing-skills" bash -c "claude plugin marketplace list 2>/dev/null | grep -qi marketingskills"
+check "claude plugin marketplace: social-media-skills" bash -c "claude plugin marketplace list 2>/dev/null | grep -qi social-media-skills"
 check "n8n binary present" command -v n8n
 check "app/config.json vaultPath set" test -n "$VAULT_PATH"
 

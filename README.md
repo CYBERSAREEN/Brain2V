@@ -118,8 +118,10 @@ installs and drives it for you:
   at `/graphify`. See `knowledge/obs-mcp-integration.md`.
 - **n8n** — self-hosted, **local** automation (`n8n start` → `:5678`). Every user runs it
   on their own machine; workflows are captured via `/obs-n8n` and routed by the organiser.
-- **Plugin marketplaces** (`plugins.json`) — superpowers, claude-skills. Auto-added at
-  setup; `/obs-organiser` decides when each is used per `knowledge/obs-plugin-routing.md`.
+- **Plugin marketplaces** (`plugins.json`) — superpowers, claude-skills, marketing-skills,
+  social-media-skills. Auto-added at setup; `/obs-organiser` decides when each is used per
+  `knowledge/obs-plugin-routing.md`. (`gstack` is deliberately not included — it has no
+  `.claude-plugin/marketplace.json`, so it isn't installable this way; see `plugins.json`.)
 
 ### Setup (Claude drives this — see `CLAUDE.md`)
 
@@ -140,3 +142,5 @@ Brain2V stands on open-source work by these projects and creators:
 - **[n8n](https://github.com/n8n-io/n8n)** — fair-code local automation.
 - **[superpowers](https://github.com/obra/superpowers)** — Jesse Vincent — engineering skill marketplace.
 - **[Anthropic Skills](https://github.com/anthropics/skills)** — official Claude skill library.
+- **[marketingskills](https://github.com/coreyhaines31/marketingskills)** — Corey Haines — marketing skill marketplace.
+- **[social-media-skills](https://github.com/charlie947/social-media-skills)** — social content skill marketplace.

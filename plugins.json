@@ -1,7 +1,9 @@
 {
-  "$comment": "Plugin marketplaces Brain2V auto-installs at setup. The organiser (/obs-organiser via knowledge/obs-plugin-routing.md) decides when each is actually used. gstack/marketing-skills/social-media-skills were dropped 2026-07-10 — their guessed slugs were confirmed wrong (invalid format or 404); re-add once real sources are known.",
+  "$comment": "Plugin marketplaces Brain2V auto-installs at setup. The organiser (/obs-organiser via knowledge/obs-plugin-routing.md) decides when each is actually used. gstack (garrytan/gstack, 120k+ star Claude Code setup) is intentionally NOT here: it has no .claude-plugin/marketplace.json, so it isn't installable via `claude plugin marketplace add` — it ships its own separate installer (bin/gstack-*) that would need explicit, separate review before running.",
   "marketplaces": [
-    { "name": "superpowers",   "source": "obra/superpowers",  "verified": true, "purpose": "battle-tested engineering skills: planning, debugging, TDD, subagent patterns" },
-    { "name": "claude-skills", "source": "anthropics/skills", "verified": true, "purpose": "Anthropic's official skill library: docs, spreadsheets, PDFs, design" }
+    { "name": "superpowers",         "source": "obra/superpowers",              "verified": true, "purpose": "battle-tested engineering skills: planning, debugging, TDD, subagent patterns" },
+    { "name": "claude-skills",       "source": "anthropics/skills",             "verified": true, "purpose": "Anthropic's official skill library: docs, spreadsheets, PDFs, design" },
+    { "name": "marketing-skills",    "source": "coreyhaines31/marketingskills", "verified": true, "purpose": "marketing copy, positioning, SEO, landing pages, growth engineering" },
+    { "name": "social-media-skills", "source": "charlie947/social-media-skills","verified": true, "purpose": "social content strategy, creation, and analysis" }
   ]
 }

@@ -30,6 +30,7 @@ Brain2V must be given a row here.**
 | `/obs-distil` | large PDF/brief/transcript to "remember", or a bloated raw-dump note | organiser decision | offer — stores only the required essence + source pointer (storage-side token saving) |
 | `/obs-requests` | session ending (research ambiguous prompts from this session); or a new prompt matches a filed refined request | `SessionEnd` hook for the review; organiser states the inferred requirement and asks a fast permission check (never skipped) before applying a matched refinement |
 | `/obs-tokenguard` | on demand, or worth a look near session end | organiser decision — offered, not auto-run. Paired with a real-time `PreToolUse` hook on `Read` (see below) |
+| `/obs-verify-brain2v` | after any change to app/dashboard/n8n/Graphify wiring; or an explicit "test everything end-to-end" request | organiser decision — auto-offer after infra changes; runs `scripts/verify-e2e.sh` and loops fixes until clean or externally blocked |
 
 ## Real-time efficiency hook
 

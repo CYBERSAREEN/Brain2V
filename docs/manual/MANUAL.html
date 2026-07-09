@@ -116,8 +116,8 @@
   <h1>Brain2V</h1>
   <div class="sub">Full Skill Manual — every /obs-* command, explained and demonstrated</div>
   <div class="meta">
-    Generated: 2026-07-06 (updated same day — see §"Keeping this manual in sync")<br>
-    28 skills documented — no page limit, nothing abridged
+    Generated: 2026-07-06 (updated 2026-07-10 — see §"Keeping this manual in sync")<br>
+    30 skills documented — no page limit, nothing abridged
   </div>
 </div>
 
@@ -174,6 +174,7 @@
   <li><a href="#obs-spine">27. /obs-spine</a> — which flow applies: author, fresh-install, or upgrade</li>
   <li><a href="#obs-adapt">28. /obs-adapt</a> — safe merge: add/update, never overwrite your data</li>
   <li><a href="#obs-security-protocol">29. /obs-security-protocol</a> — audits a repo for leaked credentials before they ever go public</li>
+  <li><a href="#obs-verify-brain2v">30. /obs-verify-brain2v</a> — end-to-end smoke test: loops real fixes until every service actually works</li>
 </ol>
 </div>
 
@@ -201,7 +202,7 @@ never dumped raw — so every future read costs a fraction of the tokens with no
 actually lost.</li>
 </ul>
 
-<p>This manual documents all 28 skills currently in the family — 26 core skills every
+<p>This manual documents all 30 skills currently in the family — 26 core skills every
 installer gets (see <code>knowledge/obs-core-family.md</code>), plus <code>/obs-pentest</code>
 (present only where an installer's own profile calls for it — never a universal default)
 and the <code>/obs-&lt;project&gt;</code> pattern (a new one created per project, demonstrated
@@ -1458,6 +1459,45 @@ living protocol doc — update its pattern table and standing rules there first,
 skill and the organiser's duty both read from it. Distinct from a general OWASP code
 review (the separate <code>security-auditor</code> agent) — this skill is specifically
 about credential leakage, not code vulnerabilities.</p>
+</section>
+
+<section class="skill" id="obs-verify-brain2v">
+<h2>30. /obs-verify-brain2v <span class="badge">Efficiency</span></h2>
+<div class="oneliner">Runs <code>scripts/verify-e2e.sh</code> against this machine's live
+Brain2V install and loops real fixes until every check is genuinely green, not just
+installed.</div>
+
+<h3>What it does</h3>
+<p>Checks the things that "installed" doesn't guarantee: the dashboard actually answers
+on its configured port, n8n's <code>/healthz</code> actually returns <code>ok</code>, the
+<code>graphify</code> CLI and its registered Claude skill are actually present, a
+<code>graphify-out/graph.json</code> has actually been built for the configured vault,
+and the <code>verified:true</code> plugin marketplaces from <code>plugins.json</code> are
+actually registered. On any <code>FAIL</code>, diagnoses and fixes the real cause and
+reruns — never edits the check to make it pass without the underlying feature working.
+Stops and names the blocker rather than looping forever when a failure needs something
+only the installer can provide (an API key, a real marketplace slug, a credential).</p>
+
+<div class="honest"><b>Honest limit:</b> this is a smoke test, not a full QA suite — it
+confirms each service is reachable and each artifact exists, not that every feature
+behaves correctly under load or edge cases.</div>
+
+<h3>Usage</h3>
+<table>
+<tr><th>Argument</th><th>Effect</th></tr>
+<tr><td><code>(none)</code></td><td>Runs <code>scripts/verify-e2e.sh</code> against this
+machine's install.</td></tr>
+</table>
+
+<h3>Example</h3>
+<pre>/obs-verify-brain2v</pre>
+<p>Intended to be the target of <code>/loop</code> (optionally under the Fable 5 model)
+for a "keep testing and improving until every feature works end-to-end" session — each
+iteration either closes a real gap or clearly names the external blocker.</p>
+
+<p class="related"><b>Related:</b> <code>scripts/verify-e2e.sh</code> is the actual check
+script; <code>knowledge/obs-mcp-integration.md</code> and
+<code>knowledge/obs-plugin-routing.md</code> document what each check is verifying.</p>
 </section>
 
 </body>

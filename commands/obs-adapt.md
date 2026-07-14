@@ -1,5 +1,5 @@
 ---
-description: Safely merges a newer Brain2V version into an existing install — adds what's missing, updates what's unchanged since the last sync, and never touches anything locally modified or personal. Also keeps each installer's own Skills/ vault graph in sync with whatever they actually have installed.
+description: Safely merges a newer BrainV2 version into an existing install — adds what's missing, updates what's unchanged since the last sync, and never touches anything locally modified or personal. Also keeps each installer's own Skills/ vault graph in sync with whatever they actually have installed.
 argument-hint: (none) — diffs the repo against this machine's install and reports before doing anything
 ---
 
@@ -20,7 +20,7 @@ baseline-builder in `fresh-install` mode).
   for every `commands/*.md`, `knowledge/*.md`, and `hooks/scripts/*` file. Written by
   `install.sh` on first install; updated by this skill after every run.
 - `~/.claude/.brain2v-version` — the version string last synced.
-- If **neither exists yet** (an installer who set up Brain2V before this skill existed):
+- If **neither exists yet** (an installer who set up BrainV2 before this skill existed):
   don't touch any file on this first run. Build the manifest from the **current** local
   file hashes (treat whatever's on disk right now as the pristine baseline going
   forward) and write `.brain2v-version` from the repo's `VERSION`. Report plainly that
@@ -56,7 +56,7 @@ including anything `/obs-skill-maker` generated for them, not a fixed list) and 
 graph-visibility pattern:
 - Missing stub → **create** it (one-liner description + argument-hint pulled from that
   command file's own frontmatter, source path, category tag, backlink to whichever
-  `Projects/<name>.md` this installer's own Brain2V-tracking note is, if one exists, plus
+  `Projects/<name>.md` this installer's own BrainV2-tracking note is, if one exists, plus
   `tested: false` in frontmatter — no skill starts life marked tested).
 - Existing stub whose description no longer matches the command file's current
   frontmatter → **update** the stub's description only, leave everything else (any notes

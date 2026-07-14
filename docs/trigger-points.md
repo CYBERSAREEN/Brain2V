@@ -4,7 +4,7 @@ Every `/obs-*` skill has a defined moment `/obs-organiser` considers invoking it
 fire via a Claude Code hook (reliably prompted by an event); others the organiser offers
 based on the request. This table is the single source of truth — it must stay in sync
 with the table inside `commands/obs-organiser.md`, and **every new skill added to
-Brain2V must be given a row here.**
+BrainV2 must be given a row here.**
 
 | Skill | Trigger | Mechanism | Auto or ask |
 |---|---|---|---|
@@ -49,7 +49,7 @@ turn. This is why every "auto" row above still depends on the model acting; the 
 guarantees the *prompt*, not the *execution*.
 
 Two hooks are **vault-path-scoped** (`PostToolUse` on Write/Edit) via an `if:` condition
-naming the vault directory. Anyone installing Brain2V must change that path to their own
+naming the vault directory. Anyone installing BrainV2 must change that path to their own
 vault, or the connect-offer nudge won't fire (and won't fire on the wrong files either).
 
 ## Adding a new skill later
@@ -61,10 +61,10 @@ When a new `/obs-<name>` is created:
 4. **Add a row to this table and to the table in `commands/obs-organiser.md`** — this is
    how the organiser becomes aware of it. A skill the organiser doesn't know about is a
    skill that never gets triggered.
-5. **Update `docs/manual/MANUAL.html` and regenerate `docs/manual/Brain2V-Manual.pdf`** —
+5. **Update `docs/manual/MANUAL.html` and regenerate `docs/manual/BrainV2-Manual.pdf`** —
    add the new skill's section (or update/remove an existing one on a material behavior
    change), fix the skill count in the titlepage and intro, then regenerate the PDF
-   (`chromium --headless --disable-gpu --no-sandbox --print-to-pdf=docs/manual/Brain2V-Manual.pdf --print-to-pdf-no-header file://<absolute path to MANUAL.html>`,
+   (`chromium --headless --disable-gpu --no-sandbox --print-to-pdf=docs/manual/BrainV2-Manual.pdf --print-to-pdf-no-header file://<absolute path to MANUAL.html>`,
    or `weasyprint` if chromium isn't available). The manual is hand-authored, not
    auto-generated — nothing keeps it current except this step. A stale manual (describing
    removed skills, missing new ones) is worse than no manual, so this is not optional.

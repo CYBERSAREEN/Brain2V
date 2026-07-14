@@ -72,7 +72,7 @@ For each candidate skill, decide: **trigger automatically, or ask the user first
   clearly "do it now." State the decision in one line so the user can override.
 
 ## 4. Trigger points (the table the organiser watches)
-This mirrors `Brain2V/docs/trigger-points.md`; keep the two in sync.
+This mirrors `BrainV2/docs/trigger-points.md`; keep the two in sync.
 
 | Skill | Organiser triggers it when… | Auto or ask |
 |---|---|---|
@@ -117,9 +117,9 @@ against that list. Don't treat any core skill as something a "lite" install can 
 the organiser assumes the whole family is present and routes accordingly.
 
 New `/obs-*` skills added later MUST be given a row here and in
-`Brain2V/docs/trigger-points.md` when created — that's how the organiser stays aware of
+`BrainV2/docs/trigger-points.md` when created — that's how the organiser stays aware of
 the whole family. They must also get a section in `docs/manual/MANUAL.html` (regenerate
-`Brain2V-Manual.pdf` from it) — the manual is hand-authored, not auto-generated, and
+`BrainV2-Manual.pdf` from it) — the manual is hand-authored, not auto-generated, and
 already drifted stale once (2026-07-06) when this step was skipped.
 
 ## 5. Drive the loop, close it with learning
@@ -143,7 +143,7 @@ Every turn, prefer the cheapest path that's correct:
 Report, when relevant, that you used the index instead of a scan — it makes the
 efficiency visible and keeps the discipline honest.
 
-## 7. Keep Brain2V in sync (config-driven, per-installer opt-in)
+## 7. Keep BrainV2 in sync (config-driven, per-installer opt-in)
 This repo is public and installed by people other than its original author, so the sync
 target is **never hardcoded here** — it's read from a local, git-ignored config the
 installer owns: `~/.claude/brain2v.sync.json`:
@@ -191,7 +191,7 @@ installer owns: `~/.claude/brain2v.sync.json`:
     pre-authorization. Commit locally if you like, but hold the push until the user
     explicitly says to go ahead.
 - **Before every push (either case, and honestly before any `git commit` anywhere, not
-  just Brain2V-sync pushes): secret-scan the diff first, silently, every time — this is
+  just BrainV2-sync pushes): secret-scan the diff first, silently, every time — this is
   now a standing duty, not a one-off check.** Read
   `~/.claude/knowledge/obs-security-protocol.md` once per session for the canonical
   pattern list (GitHub PAT, AWS key, private-key header, Supabase/Vercel/Render keys,

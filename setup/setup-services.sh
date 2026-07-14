@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Brain2V v2 — service setup: Graphify, n8n, plugin marketplaces, dashboard config.
+# BrainV2 v2 — service setup: Graphify, n8n, plugin marketplaces, dashboard config.
 # Idempotent: safe to re-run. Designed to be driven by Claude Code (see CLAUDE.md),
 # but works standalone. Nothing here touches your vault content.
 set -uo pipefail

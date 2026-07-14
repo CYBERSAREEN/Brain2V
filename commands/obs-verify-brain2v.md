@@ -1,9 +1,9 @@
 ---
-description: Runs Brain2V's end-to-end verification script (dashboard, n8n, Graphify, plugin marketplaces) and, on any FAIL, fixes the root cause and reruns — loops until every check is genuinely green, not just installed.
-argument-hint: (none) — runs against this machine's Brain2V install
+description: Runs BrainV2's end-to-end verification script (dashboard, n8n, Graphify, plugin marketplaces) and, on any FAIL, fixes the root cause and reruns — loops until every check is genuinely green, not just installed.
+argument-hint: (none) — runs against this machine's BrainV2 install
 ---
 
-Run `scripts/verify-e2e.sh` from the Brain2V repo root. It checks that every shipped
+Run `scripts/verify-e2e.sh` from the BrainV2 repo root. It checks that every shipped
 feature actually **works**, not just that it was installed: dashboard reachable, n8n
 `/healthz`, the `graphify` CLI + its registered Claude skill, a built `graphify-out/graph.json`
 for the configured vault, and the `verified:true` plugin marketplaces from `plugins.json`.
@@ -18,7 +18,7 @@ for the configured vault, and the `verified:true` plugin marketplaces from `plug
    case stop and report exactly what's needed, don't loop forever on a blocker outside
    your control.
 4. Log any real fix via `/obs-mistakes` / `/obs-learn` per the usual protocol, and update
-   `Projects/Brain2V.md`'s stage log with the result.
+   `Projects/BrainV2.md`'s stage log with the result.
 
 This is the command to run under `/loop` (optionally on the Fable 5 model) for a
 "keep testing and improving until every feature works end-to-end" session — each

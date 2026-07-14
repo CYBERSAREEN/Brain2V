@@ -1,7 +1,7 @@
-# Brain2V — Claude Code self-setup
+# BrainV2 — Claude Code self-setup
 
 You (Claude Code) are the installer. When a user opens this freshly-cloned repo and asks
-to set up Brain2V (or says anything like "install", "set this up", "make my second
+to set up BrainV2 (or says anything like "install", "set this up", "make my second
 brain"), run this sequence — confirming with the user only at the two marked points.
 
 ## Setup sequence
@@ -20,7 +20,7 @@ brain"), run this sequence — confirming with the user only at the two marked p
 5. **First boot** — start `node app/server.js`, confirm `http://localhost:7180` returns
    the dashboard with real numbers, then start `n8n start` and confirm
    `http://localhost:5678/healthz`. Show the user both URLs.
-6. **Onboard the human** — run `/obs-introduction` so Brain2V learns who this installer
+6. **Onboard the human** — run `/obs-introduction` so BrainV2 learns who this installer
    is and generates their profession-specific skills via `/obs-skill-maker`.
 
 ## Standing rules once installed

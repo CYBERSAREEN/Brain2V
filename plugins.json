@@ -1,5 +1,5 @@
 {
-  "$comment": "Plugin marketplaces Brain2V auto-installs at setup. The organiser (/obs-organiser via knowledge/obs-plugin-routing.md) decides when each is actually used. gstack (garrytan/gstack, 120k+ star Claude Code setup) is intentionally NOT here: it has no .claude-plugin/marketplace.json, so it isn't installable via `claude plugin marketplace add` — it ships its own separate installer (bin/gstack-*) that would need explicit, separate review before running.",
+  "$comment": "Plugin marketplaces BrainV2 auto-installs at setup. The organiser (/obs-organiser via knowledge/obs-plugin-routing.md) decides when each is actually used. gstack (garrytan/gstack, 120k+ star Claude Code setup) is intentionally NOT here: it has no .claude-plugin/marketplace.json, so it isn't installable via `claude plugin marketplace add` — it ships its own separate installer (bin/gstack-*) that would need explicit, separate review before running.",
   "marketplaces": [
     { "name": "superpowers",         "source": "obra/superpowers",              "verified": true, "purpose": "battle-tested engineering skills: planning, debugging, TDD, subagent patterns" },
     { "name": "claude-skills",       "source": "anthropics/skills",             "verified": true, "purpose": "Anthropic's official skill library: docs, spreadsheets, PDFs, design" },

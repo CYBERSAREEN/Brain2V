@@ -1,4 +1,4 @@
-# Efficiency: what makes Brain2V get cheaper over time
+# Efficiency: what makes BrainV2 get cheaper over time
 
 The goal is real: a second similar project should cost less time and fewer tokens than
 the first. This doc is an honest account of *how* — and where the limits are — so nobody
@@ -12,7 +12,7 @@ mistakes reuse for magic.
    This is the single biggest per-request saving, and it compounds as the vault grows.
 
 2. **Distillation replaces raw dumps (storage-side).** When a large source is handed in —
-   a whole PDF, an over-explained brief, a long transcript — Brain2V stores only the
+   a whole PDF, an over-explained brief, a long transcript — BrainV2 stores only the
    *required* essence plus a pointer to the original file, never the raw material (see
    `knowledge/obs-distillation-protocol.md` and the `/obs-distil` skill). A note that's a
    fraction of the source but still complete is a fraction of the tokens on *every* future

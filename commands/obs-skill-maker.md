@@ -50,7 +50,7 @@ install a draft that wasn't approved.
 
 ## 5. Separate gate for shipping it to everyone (GitHub)
 A locally-verified skill is personal to that installer — it is NOT automatically proposed
-back to the public Brain2V repo. If the installer wants to contribute it upstream so other
+back to the public BrainV2 repo. If the installer wants to contribute it upstream so other
 people in similar work benefit, that is a **new skill file** by `obs-organiser`'s section 7
 rule: it always stops to ask the repo owner before pushing, regardless of the sync config.
 Don't conflate "verified for my own use" with "aired live for everyone" — they're two

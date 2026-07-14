@@ -1,11 +1,11 @@
 # Obsidian distillation protocol — store the minimum required, never the raw dump
 
-A native Brain2V efficiency principle: when the user hands over something large — a whole
+A native BrainV2 efficiency principle: when the user hands over something large — a whole
 PDF, an over-explained project brief, a long transcript, a pasted document — and wants it
 "remembered," the vault should receive **only what future work will actually need**, not
 the raw material. Every stored token is a token re-read on every future lookup, so a note
 that's 10x smaller but still complete is 10x cheaper forever. This is the storage-side
-half of Brain2V's efficiency (the index is the read-side half).
+half of BrainV2's efficiency (the index is the read-side half).
 
 ## The rule
 **Distil, don't dump.** For any capture larger than a few lines:

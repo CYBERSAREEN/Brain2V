@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Brain2V end-to-end verification — checks that every shipped feature actually works,
+# BrainV2 end-to-end verification — checks that every shipped feature actually works,
 # not just that it was installed. Exit 0 = all PASS, exit 1 = at least one FAIL.
 # Meant to be re-run in a loop (e.g. by /verify-brain2v under Fable 5) until clean.
 set -uo pipefail

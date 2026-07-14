@@ -1,6 +1,6 @@
-# Brain2V
+# BrainV2
 
-**A second-brain skill system for Claude Code.** Brain2V turns a plain Obsidian vault
+**A second-brain skill system for Claude Code.** BrainV2 turns a plain Obsidian vault
 into a self-organizing knowledge system that Claude Code drives as one coherent brain —
 routing each request to the right skill, fetching context in O(1) via a hash index
 instead of scanning the whole vault, and closing the loop on every task by recording
@@ -14,7 +14,7 @@ learnings and mistakes so repeat work gets faster and cheaper.
 ## What's in here
 
 ```
-Brain2V/
+BrainV2/
 ├── commands/      # the /obs-* skills + /trace (install into ~/.claude/commands/)
 ├── knowledge/     # shared protocols the skills rely on (install into ~/.claude/knowledge/)
 │   ├── obs-index-protocol.md     # the two-layer fast index (hash + filesystem symlinks)
@@ -70,7 +70,7 @@ Brain2V/
 
 ## Full Manual
 
-[`docs/manual/Brain2V-Manual.pdf`](./docs/manual/Brain2V-Manual.pdf) — every skill above,
+[`docs/manual/BrainV2-Manual.pdf`](./docs/manual/BrainV2-Manual.pdf) — every skill above,
 documented in detail with usage syntax and a worked example, plus an "Honest limit" note
 wherever a skill has a genuine approximation or constraint. Source: `docs/manual/MANUAL.html`.
 
@@ -88,7 +88,7 @@ conditions** (`.../ObsidianVaults/AgencyMemory/*`) to your own vault path.
 
 ## Security
 
-Brain2V is designed to be public-safe:
+BrainV2 is designed to be public-safe:
 - **No vault content ships here** — only skill definitions and protocols.
 - **No credentials ship here.** `/obs-personality` stores secrets *locally* in your vault
   by design; those notes and any secrets file are excluded by `.gitignore` and must
@@ -104,9 +104,9 @@ MIT — see [LICENSE](./LICENSE).
 
 ---
 
-## Brain2V as an app (v2)
+## BrainV2 as an app (v2)
 
-Beyond the skill system, Brain2V ships a local **application layer** — Claude Code
+Beyond the skill system, BrainV2 ships a local **application layer** — Claude Code
 installs and drives it for you:
 
 - **`app/`** — a zero-dependency Node dashboard (`node app/server.js` → `http://localhost:7180`).
@@ -136,7 +136,7 @@ n8n start                 # automation -> :5678
 
 ## Acknowledgements & upstream tools
 
-Brain2V stands on open-source work by these projects and creators:
+BrainV2 stands on open-source work by these projects and creators:
 
 - **[Graphify](https://github.com/Graphify-Labs/graphify)** — Safi Shamsi (MIT) — the knowledge-graph engine.
 - **[n8n](https://github.com/n8n-io/n8n)** — fair-code local automation.

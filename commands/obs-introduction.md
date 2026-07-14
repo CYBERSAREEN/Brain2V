@@ -1,9 +1,9 @@
 ---
-description: First-run setup skill for a new Brain2V installer. Asks what the person does and what they want this setup for, then hands off to /obs-skill-maker to build a skill reflecting their actual work.
+description: First-run setup skill for a new BrainV2 installer. Asks what the person does and what they want this setup for, then hands off to /obs-skill-maker to build a skill reflecting their actual work.
 argument-hint: (none)
 ---
 
-No parameters. This is the front door for anyone who found Brain2V from outside — a
+No parameters. This is the front door for anyone who found BrainV2 from outside — a
 GitHub browse, a recommendation, anywhere other than being walked through it directly —
 so ask in plain language, don't assume prior context about the `/obs-*` family.
 

@@ -1,6 +1,6 @@
 # Plugin routing — which installed plugin the organiser reaches for
 
-Brain2V installs several Claude Code plugin marketplaces at setup (see `plugins.json`),
+BrainV2 installs several Claude Code plugin marketplaces at setup (see `plugins.json`),
 but installing ≠ always-on. `/obs-organiser` decides per request which one is relevant,
 the same way it routes to `/obs-*` skills. This doc is the routing map it reads.
 

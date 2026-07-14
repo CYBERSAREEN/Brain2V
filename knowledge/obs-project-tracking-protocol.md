@@ -1,6 +1,6 @@
 # Obsidian per-project tracking protocol — one /obs-<project> per project, stage by stage
 
-Brain2V documents itself (`/obs-brain2v`) using the same pattern every other project on this
+BrainV2 documents itself (`/obs-brain2v`) using the same pattern every other project on this
 machine should get: **every new project gets its own `/obs-<project-name>` skill**, whose
 entire job is capturing that project's updates, errors, and design ideology as it happens —
 from first commit through to production — so understanding never has to be reconstructed
@@ -49,7 +49,7 @@ exists — both link to each other, neither replaces the other.
 ## Graph visibility — Skills/ stub notes
 Skill definitions themselves (`~/.claude/commands/*.md`) live outside the vault entirely,
 so Obsidian's graph has nothing to draw for them unless a vault-side pointer exists per
-skill. Any project that documents a skill family (Brain2V's own `/obs-brain2v` being the
+skill. Any project that documents a skill family (BrainV2's own `/obs-brain2v` being the
 first case) should have a matching `<vault>/Skills/<name>.md` stub per skill actually
 installed on that machine: a one-liner description + argument-hint pulled from the
 command file's own frontmatter, its source path, a category tag, and a backlink to the

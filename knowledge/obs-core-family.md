@@ -1,4 +1,4 @@
-# Brain2V core family — non-optional for every installer
+# BrainV2 core family — non-optional for every installer
 
 Every installer gets the whole family; none of this is "advanced" or "opt-in." The
 organiser (`obs-organiser.md` step 4) assumes every skill on this list is present and

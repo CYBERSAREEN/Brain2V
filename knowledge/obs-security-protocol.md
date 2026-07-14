@@ -32,7 +32,7 @@ run time rather than hardcoding them here, since they rotate.
    (`Personalities/*.md`, `~/.claude/.personality.txt`, the tool's own config file).
    Reference secrets by name ("the GH token", "the Supabase service key"), never by value.
 2. **Any shared/shipped repo must have `.gitignore` covering credential-shaped files
-   BEFORE the first commit** — not retrofitted after. Brain2V's own `.gitignore` is the
+   BEFORE the first commit** — not retrofitted after. BrainV2's own `.gitignore` is the
    reference example (`.env`, `*.pem`, `*.key`, `id_ed25519`, `.personality.txt`,
    `brain2v.sync.json`, plus every vault-content folder).
 3. **Before any `git commit` or `git push`**, the pattern list above gets checked
@@ -71,7 +71,7 @@ run time rather than hardcoding them here, since they rotate.
    **never the matched value itself** in the report.
 
 ## Changelog
-- 2026-07-08 — initial version, written after auditing the author's own Brain2V fork
+- 2026-07-08 — initial version, written after auditing the author's own BrainV2 fork
   (clean result: no secret values found anywhere in git history, single collaborator,
   no deploy keys, no native secret-scanning alerts).
 - (updates land here as installers refine the protocol — append, don't overwrite)

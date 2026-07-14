@@ -3,7 +3,7 @@
 A "brain" without a spine has no framework holding its decisions together — `/obs-organiser`
 routes *what* to invoke, but it was silently assuming one context the whole time: the
 author's own machine, mid-build, safe to overwrite freely. That assumption is wrong the
-moment anyone else installs Brain2V, and wrong again the moment even the author's own
+moment anyone else installs BrainV2, and wrong again the moment even the author's own
 machine goes from "building this for the first time" to "someone is updating an existing
 install." `/obs-spine` is the missing layer: it detects which of three modes actually
 applies *right now*, on *this* machine, and hands the organiser (and `/obs-adapt`) a
@@ -11,7 +11,7 @@ concrete flow to follow — instead of one flow pretending to fit every situatio
 
 ## The three modes
 
-### 1. `author` — actively building Brain2V itself
+### 1. `author` — actively building BrainV2 itself
 **Signal:** `~/.claude/brain2v.sync.json` exists with `enabled: true`. Only the original
 author would opt into pushing their own edits straight back to their own repo — every
 other installer's config ships disabled by default (per `install.sh`).
@@ -20,7 +20,7 @@ describes — routine edits auto-sync, new skill files ask first, identity-check
 is Claude's own job. Nothing about ordinary use changes; this mode is what's been running
 all session.
 
-### 2. `fresh-install` — a brand-new installer, no prior Brain2V state
+### 2. `fresh-install` — a brand-new installer, no prior BrainV2 state
 **Signal:** `enabled: false` (or the sync config is absent) **and** no
 `Personalities/*.md` note anywhere has `intake-complete: true` yet **and** no
 `~/.claude/.brain2v-version` marker exists yet (nothing installed before this session).
@@ -29,7 +29,7 @@ profile-specific behavior (no pentest skill, no custom workflow — just the cor
 After intake, offer `/obs-skill-maker`. There is nothing to merge or preserve yet, so
 `/obs-adapt` has no role here beyond writing the very first manifest/version marker.
 
-### 3. `upgrade` — an existing installer pulling a newer Brain2V version
+### 3. `upgrade` — an existing installer pulling a newer BrainV2 version
 **Signal:** `enabled: false` **and** `~/.claude/.brain2v-version` exists **and** its
 content differs from the repo's own `VERSION` file (or a `commands/`/`knowledge/` file
 the manifest tracks no longer matches what's on disk in the repo). This installer already

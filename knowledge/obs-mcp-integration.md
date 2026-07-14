@@ -1,6 +1,6 @@
 # MCP integration — giving the vault a shape
 
-Brain2V wires two engines into the vault so the "second brain" has a live, queryable
+BrainV2 wires two engines into the vault so the "second brain" has a live, queryable
 shape instead of being a pile of notes:
 
 ## Graphify (semantic graph)
@@ -25,7 +25,7 @@ shape instead of being a pile of notes:
 
 - **What it is:** self-hosted workflow automation. Every user runs it locally
   (`n8n start` → `http://localhost:5678`) — no cloud, data stays on the machine.
-- **Role in Brain2V:** the automation layer. Workflows the user builds (capture-to-vault
+- **Role in BrainV2:** the automation layer. Workflows the user builds (capture-to-vault
   webhooks, scheduled digests, cross-service triggers) are recorded via `/obs-n8n` so
   `/obs-organiser` can route future "automate X" requests to an existing workflow instead
   of rebuilding it.

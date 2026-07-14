@@ -1,5 +1,5 @@
 ---
-description: Detects which of Brain2V's three operating modes applies right now (author actively building it, a brand-new installer, or an existing installer updating) and tells the organiser which flow to follow. The framework /obs-organiser routes within.
+description: Detects which of BrainV2's three operating modes applies right now (author actively building it, a brand-new installer, or an existing installer updating) and tells the organiser which flow to follow. The framework /obs-organiser routes within.
 argument-hint: (none) — runs the detection and reports the mode
 ---
 
@@ -15,7 +15,7 @@ session if not already done — this skill is that protocol's detection step.
 ## 1. Gather the signals (cheap — no vault scan)
 - `~/.claude/brain2v.sync.json` — does it exist, and what is `enabled`?
 - `~/.claude/.brain2v-version` — does it exist, and what does it contain?
-- The Brain2V repo's own `VERSION` file, if `repo_path` from the sync config (or a known
+- The BrainV2 repo's own `VERSION` file, if `repo_path` from the sync config (or a known
   local path) is reachable — compare its content to `.brain2v-version`.
 - `ls <vault>/Personalities/*.md` (guard with existence check first, per the standing
   lesson about not blind-`ls`-ing a folder that might not exist) — does any note have

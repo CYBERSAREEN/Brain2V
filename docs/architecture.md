@@ -1,6 +1,6 @@
-# Brain2V architecture
+# BrainV2 architecture
 
-Brain2V is not an app or a server — it's a **protocol layer over Claude Code + an
+BrainV2 is not an app or a server — it's a **protocol layer over Claude Code + an
 Obsidian vault.** There is no running process. Everything happens on the model's turns,
 driven by three things: the skill definitions (`commands/`), the shared protocols
 (`knowledge/`), and the hook nudges (`hooks/`).
@@ -79,14 +79,14 @@ config-driven via `~/.claude/brain2v.sync.json` (`enabled`/`repo_path`/`remote`)
 in the shipped skill files ever hardcodes a specific person's repo or path, because this
 repo is installed by people other than its original author. `install.sh` writes that
 config disabled by default; an installer opts in with their own GitHub login and their own
-repo. See `commands/obs-organiser.md` § "Keep Brain2V in sync" for the exact rule,
+repo. See `commands/obs-organiser.md` § "Keep BrainV2 in sync" for the exact rule,
 including: routine edits to already-shipped skills sync automatically once opted in, but a
 brand-new skill file always stops to ask first — a new feature being aired publicly is a
 bigger decision than a routine sync.
 
 ## Onboarding a new installer (profile-driven, not one-size-fits-all)
 
-Brain2V doesn't assume every installer does the same kind of work. `/obs-introduction`
+BrainV2 doesn't assume every installer does the same kind of work. `/obs-introduction`
 runs first on a fresh install, asks what the person does and what they want the setup
 for, and stores that as a Work profile. `/obs-skill-maker` then drafts a skill reflecting
 that actual work — saved to `pending-skills/`, never live until explicitly verified. Only
@@ -97,7 +97,7 @@ see `knowledge/obs-core-family.md` for exactly what *is* core vs. generated per 
 ## Per-project tracking
 
 Any project under active development can get its own `/obs-<project-name>` skill (e.g.
-the author's own `/obs-brain2v`, tracking Brain2V's build — not shipped in this repo,
+the author's own `/obs-brain2v`, tracking BrainV2's build — not shipped in this repo,
 since it's specific to that one project/persona; see `obs-project-tracking-protocol.md`
 to create your own) — a durable, stage-by-stage log of that
 project's updates, errors, and design reasoning from build through production, always

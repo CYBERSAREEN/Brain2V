@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Brain2V installer — copies the skill system into ~/.claude/ safely.
+# BrainV2 installer — copies the skill system into ~/.claude/ safely.
 # It never overwrites your settings.json; it prints the hook block for you to merge.
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 
-echo "Brain2V installer"
+echo "BrainV2 installer"
 echo "  source: $REPO_DIR"
 echo "  target: $CLAUDE_DIR"
 echo
@@ -72,10 +72,10 @@ done
 # Version marker + checksum manifest — the baseline /obs-adapt diffs future updates
 # against. Only ever written/refreshed for files that exist in $CLAUDE_DIR right now;
 # never overwrites content, just records what's there.
-VERSION_FILE="$CLAUDE_DIR/.brain2v-version"
-MANIFEST_FILE="$CLAUDE_DIR/.brain2v-manifest.json"
+VERSION_FILE="$CLAUDE_DIR/.brainv2-version"
+MANIFEST_FILE="$CLAUDE_DIR/.brainv2-manifest.json"
 cp "$REPO_DIR/VERSION" "$VERSION_FILE"
-echo "  [ok]   .brain2v-version ($(cat "$VERSION_FILE"))"
+echo "  [ok]   .brainv2-version ($(cat "$VERSION_FILE"))"
 
 python3 - "$REPO_DIR" "$CLAUDE_DIR" "$MANIFEST_FILE" <<'PYEOF'
 import hashlib, json, sys, pathlib
@@ -93,12 +93,12 @@ for f in sorted((repo_dir / "hooks" / "scripts").glob("*")):
     if local.exists():
         manifest[rel] = hashlib.sha256(local.read_bytes()).hexdigest()
 manifest_file.write_text(json.dumps(manifest, indent=2, sort_keys=True))
-print(f"  [ok]   .brain2v-manifest.json ({len(manifest)} files recorded)")
+print(f"  [ok]   .brainv2-manifest.json ({len(manifest)} files recorded)")
 PYEOF
 
-SYNC_CONFIG="$CLAUDE_DIR/brain2v.sync.json"
+SYNC_CONFIG="$CLAUDE_DIR/brainv2.sync.json"
 if [ -e "$SYNC_CONFIG" ]; then
-  echo "  [skip] brain2v.sync.json already exists (leaving your settings as-is)"
+  echo "  [skip] brainv2.sync.json already exists (leaving your settings as-is)"
 else
   cat > "$SYNC_CONFIG" <<'JSON'
 {
@@ -107,7 +107,7 @@ else
   "remote": ""
 }
 JSON
-  echo "  [ok]   brain2v.sync.json (disabled template written to $SYNC_CONFIG)"
+  echo "  [ok]   brainv2.sync.json (disabled template written to $SYNC_CONFIG)"
 fi
 
 echo

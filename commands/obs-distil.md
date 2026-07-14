@@ -1,5 +1,5 @@
 ---
-description: "Remember this, minimally." Takes an over-explained brief, a whole PDF, or a long dump and stores ONLY the required essence in Obsidian (with a pointer to the source), so every future read costs far fewer tokens. Brain2V's native context-reduction feature.
+description: "Remember this, minimally." Takes an over-explained brief, a whole PDF, or a long dump and stores ONLY the required essence in Obsidian (with a pointer to the source), so every future read costs far fewer tokens. BrainV2's native context-reduction feature.
 argument-hint: <a path to a PDF/file, pasted text, or "distil <existing note>" to shrink a bloated note>
 ---
 
